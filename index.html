@@ -1,0 +1,1857 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field Notes &middot; Issue 01</title>
+<meta name="description" content="Field Notes, Issue 01: a Marketing and Operations internship reflection from a Singapore ride-hailing app, set as a one-off magazine.">
+<script>
+if (sessionStorage.getItem('gate')) {
+  document.documentElement.classList.add('gate-skip');
+}
+window.mediaFallback = function(el){
+  el.style.display = 'none';
+  var sib = el.nextElementSibling;
+  while (sib && !sib.classList.contains('media-placeholder')) {
+    if (sib.classList.contains('video-play')) sib.style.display = 'none';
+    sib = sib.nextElementSibling;
+  }
+  if (sib) sib.style.display = 'flex';
+};
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&display=swap" rel="stylesheet">
+<style>
+/* ============================= TOKENS ============================= */
+:root{
+  --paper:#FBF8F4;
+  --sand:#E1C7AE;
+  --sand-light:#F0E4D7;
+  --ink:#16324F;
+  --signal:#1E63C8;
+  --terracotta:#C0532A;
+  --chalk:#FFFFFF;
+  --marigold:#F2A20C;  /* high-chroma warm gold, department-field accent only */
+
+  --f-display:'Fraunces', Georgia, serif;
+  --f-body:'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --f-mono:'Martian Mono', 'SFMono-Regular', Menlo, monospace;
+
+  --gutter:clamp(20px, 5vw, 72px);
+  --ease:cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:clamp(17px,1.15vw,19px);
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img,svg{max-width:100%;display:block;}
+a{color:inherit;}
+h1,h2,h3,p,ul,ol,figure,blockquote{margin:0;}
+ul{padding:0;list-style:none;}
+button{font-family:inherit;}
+
+*:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+
+::selection{background:var(--signal);color:var(--paper);}
+
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+
+/* ============================= GRID ============================= */
+.grid12{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  column-gap:24px;
+  padding-inline:var(--gutter);
+}
+.rail{grid-column:1/4;}
+.measure{grid-column:4/10;max-width:34rem;}
+.margin{grid-column:10/13;}
+.full-bleed{width:100%;padding-inline:0;}
+
+/* ============================= MEDIA SYSTEM ============================= */
+.figure{width:calc(100% + 4rem);margin-block:clamp(3rem,6vh,5rem);}
+.figure figcaption{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink);opacity:0.62;margin-bottom:10px;text-align:left;
+}
+.figure img,.figure video{width:100%;display:block;border:1px solid rgba(22,50,79,0.18);}
+
+.figure--bleed{width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-block:clamp(3rem,6vh,5rem);}
+.figure--bleed img{width:100%;max-height:72svh;object-fit:cover;display:block;}
+.figure--bleed figcaption{padding-inline:var(--gutter);margin-top:12px;margin-bottom:0;}
+
+.figure--pair{width:calc(100% + 4rem);margin-block:clamp(3rem,6vh,5rem);}
+.video{margin-block:clamp(3rem,6vh,5rem);}
+.figure--pair .pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.figure--pair img{width:100%;display:block;border:1px solid rgba(22,50,79,0.18);}
+@media (max-width:700px){.figure--pair .pair-grid{grid-template-columns:1fr;}}
+
+.media-placeholder{
+  aspect-ratio:var(--ar,4/3);border:1px dashed rgba(22,50,79,0.3);background:var(--sand-light);
+  display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink);opacity:0.6;
+}
+
+.video-frame{position:relative;border:1px solid rgba(22,50,79,0.18);}
+.video-frame video{width:100%;display:block;}
+.video-play{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:64px;height:64px;border-radius:50%;background:rgba(251,248,244,0.92);
+  border:1px solid var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer;
+}
+.video-play::after{content:'';border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent var(--signal);margin-left:4px;}
+.video-play.hidden{display:none;}
+.video--reel .video-frame,.video--reel .media-placeholder{max-height:70svh;margin-inline:auto;aspect-ratio:9/16;width:auto;}
+.video--reel{display:flex;flex-direction:column;align-items:center;}
+.video--reel figcaption{align-self:flex-start;}
+
+@media (max-width:900px){
+  .figure,.figure--pair{width:100%;margin-block:28px;}
+}
+
+@media (max-width:900px){
+  .grid12{grid-template-columns:1fr;row-gap:20px;}
+  .rail,.measure,.margin{grid-column:1/-1;max-width:none;}
+  .margin{background:var(--sand-light);padding:16px 20px;}
+}
+
+/* ============================= TYPE SCALE ============================= */
+.f-display{font-family:var(--f-display);font-variation-settings:'SOFT' 0,'WONK' 1,'opsz' 144;}
+.masthead{
+  font-family:var(--f-display);
+  font-variation-settings:'SOFT' 0,'WONK' 1,'opsz' 144;
+  font-weight:300;
+  font-size:clamp(56px,12vw,168px);
+  letter-spacing:-0.04em;
+  line-height:0.86;
+  margin:0;
+}
+.dept-numeral-title{
+  font-family:var(--f-display);
+  font-variation-settings:'SOFT' 0,'WONK' 1,'opsz' 144;
+  font-weight:400;
+  font-size:clamp(40px,7vw,96px);
+  letter-spacing:-0.03em;
+  line-height:0.95;
+}
+.standfirst{
+  font-family:var(--f-display);
+  font-variation-settings:'SOFT' 0,'WONK' 1,'opsz' 144;
+  font-weight:400;
+  font-size:clamp(24px,3.4vw,42px);
+  line-height:1.15;
+  letter-spacing:-0.01em;
+}
+.pull-quote{
+  font-family:var(--f-display);
+  font-variation-settings:'SOFT' 0,'WONK' 1,'opsz' 144;
+  font-weight:300;
+  font-size:clamp(30px,5vw,68px);
+  line-height:1.05;
+  letter-spacing:-0.01em;
+}
+.lede{font-size:clamp(19px,1.4vw,22px);line-height:1.55;}
+.mono{
+  font-family:var(--f-mono);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.12em;
+}
+.marginalia{
+  font-family:var(--f-mono);
+  font-size:12px;
+  text-transform:none;
+  letter-spacing:0.02em;
+  color:var(--ink);
+  opacity:0.62;
+  line-height:1.55;
+}
+
+.body-copy p + p{margin-top:1.1em;}
+.body-copy p{max-width:34rem;}
+
+/* ============================= REVEAL ============================= */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity 600ms var(--ease),transform 600ms var(--ease);}
+.reveal.is-visible{opacity:1;transform:translateY(0);}
+.reveal-group.is-visible > *{transition-delay:calc(var(--i,0) * 60ms);}
+
+/* ============================= NAV ============================= */
+.site-nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px var(--gutter);
+  background:rgba(251,248,244,0.92);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(22,50,79,0.18);
+}
+.wordmark{font-family:var(--f-display);font-variation-settings:'SOFT' 0,'WONK' 1,'opsz' 144;font-size:20px;font-weight:500;text-decoration:none;}
+.nav-links{display:flex;gap:32px;position:relative;}
+.nav-links a{
+  font-family:var(--f-mono);font-size:11px;text-transform:uppercase;letter-spacing:0.12em;
+  text-decoration:none;padding-bottom:6px;border-bottom:2px solid transparent;
+  transition:border-color 300ms var(--ease),color 220ms ease-out;
+}
+.nav-links a.active{border-color:var(--current-accent, var(--signal));color:var(--ink);}
+.nav-links a:hover{border-color:var(--signal);color:var(--ink);}
+.nav-toggle{display:none;background:none;border:1px solid var(--ink);padding:8px 14px;font-family:var(--f-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;}
+.nav-overlay{
+  position:fixed;inset:0;background:var(--ink);z-index:70;
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:28px;
+  padding:var(--gutter);
+  transform:translateX(100%);transition:transform 500ms var(--ease);
+}
+.nav-overlay.open{transform:translateX(0);}
+.nav-overlay a{
+  font-family:var(--f-display);font-variation-settings:'SOFT' 0,'WONK' 1,'opsz' 144;
+  color:var(--sand);font-size:clamp(36px,10vw,64px);text-decoration:none;
+}
+.nav-overlay-close{position:absolute;top:20px;right:var(--gutter);background:none;border:none;color:var(--sand);font-family:var(--f-mono);font-size:12px;letter-spacing:0.12em;cursor:pointer;}
+
+@media (max-width:760px){
+  .nav-links{display:none;}
+  .nav-toggle{display:block;}
+}
+
+/* ============================= PROGRESS RAIL ============================= */
+.progress-rail{
+  position:fixed;left:0;top:0;bottom:0;width:6px;z-index:55;
+  background:rgba(22,50,79,0.12);
+}
+.progress-fill{width:100%;background:var(--signal);height:8%;transition:height 80ms linear;}
+.progress-ticks{position:fixed;left:14px;top:0;bottom:0;z-index:55;display:flex;flex-direction:column;justify-content:space-evenly;pointer-events:none;}
+.progress-ticks span{font-family:var(--f-mono);font-size:10px;letter-spacing:0.1em;color:var(--ink);opacity:0.4;transition:color 300ms,opacity 300ms;}
+.progress-ticks span.active{color:var(--terracotta);opacity:1;}
+
+@media (max-width:760px){
+  .progress-rail{left:0;right:0;top:0;bottom:auto;width:auto;height:2px;}
+  .progress-fill{width:8%;height:100%;transition:width 80ms linear;}
+  .progress-ticks{display:none;}
+}
+
+/* ============================= GATE ============================= */
+#gate{
+  position:fixed;inset:0;z-index:200;background:var(--ink);color:var(--sand);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+  transition:transform 900ms var(--ease);
+}
+#gate.lift{transform:translateY(-100%);}
+html.gate-skip #gate{display:none;}
+.gate-label{font-family:var(--f-mono);font-size:12px;letter-spacing:0.3em;text-transform:uppercase;}
+.gate-counter{
+  font-family:var(--f-display);font-variation-settings:'SOFT' 0,'WONK' 1,'opsz' 144;font-weight:300;
+  font-size:clamp(64px,14vw,180px);line-height:1;font-variant-numeric:tabular-nums;
+}
+.gate-issue{font-family:var(--f-mono);font-size:11px;letter-spacing:0.2em;opacity:0.8;}
+.gate-skip-link{
+  position:absolute;bottom:24px;right:var(--gutter);
+  font-family:var(--f-mono);font-size:11px;letter-spacing:0.1em;color:var(--sand);opacity:0.6;
+  text-decoration:none;background:none;border:none;cursor:pointer;
+}
+.gate-skip-link:hover{opacity:1;}
+
+/* ============================= COVER / LANDING ============================= */
+#cover{
+  position:relative;height:100svh;overflow:hidden;
+  background:var(--paper);
+}
+.cover-panel{
+  position:absolute;inset:0;background:var(--sand);
+  transform:scaleY(0);transform-origin:top;
+  transition:transform 900ms var(--ease);
+  z-index:0;
+}
+.cover-panel.poured{transform:scaleY(1);}
+html.gate-skip .cover-panel{transform:scaleY(1);transition:none;}
+#cover > *:not(.cover-panel){position:absolute;z-index:2;}
+
+.cover-masthead-wrap{top:15%;left:50%;transform:translateX(-50%);width:100%;text-align:center;padding-inline:var(--gutter);}
+.cover-masthead{
+  font-family:var(--f-display);font-variation-settings:'SOFT' 0,'WONK' 1,'opsz' 144;font-weight:300;
+  font-size:clamp(64px,15vw,220px);letter-spacing:-0.04em;line-height:0.86;margin:0;
+}
+.cover-sub-masthead{margin-top:14px;}
+
+.hero-rima-wrap{left:50%;bottom:0;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;}
+.hero-rima-shadow{width:min(50vw,340px);height:36px;margin-bottom:-14px;background:radial-gradient(ellipse at center, rgba(22,50,79,0.16) 0%, rgba(22,50,79,0) 72%);}
+.hero-rima{
+  height:clamp(320px,62svh,720px);width:auto;object-fit:contain;object-position:bottom;display:block;
+  opacity:0;transform:translateY(40px);transition:opacity 1100ms var(--ease),transform 1100ms var(--ease);
+}
+.hero-rima.entered{opacity:1;transform:translateY(0);}
+.hero-rima-placeholder{
+  display:none;height:clamp(320px,62svh,720px);aspect-ratio:3/4;
+  border:1px dashed var(--ink);align-items:center;justify-content:center;text-align:center;padding:20px;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink);opacity:0.7;
+}
+
+.cover-lines{left:var(--gutter);bottom:118px;z-index:2;max-width:26rem;display:flex;flex-direction:column;gap:8px;}
+.cover-lines p{font-family:var(--f-body);font-size:clamp(15px,1.6vw,20px);line-height:1.4;color:var(--ink);}
+.cover-line-mark{font-family:var(--f-mono);opacity:0.5;margin-right:6px;}
+.cover-credit{left:var(--gutter);bottom:64px;z-index:2;color:var(--ink);}
+.cover-meta-right{right:var(--gutter);bottom:64px;z-index:2;text-align:right;}
+
+.scroll-cue{left:50%;bottom:26px;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.scroll-cue-line{width:1px;height:24px;background:var(--ink);opacity:0.4;transform-origin:top;animation:scrollcue 1.6s ease-in-out infinite;}
+@keyframes scrollcue{0%{transform:scaleY(0);}50%{transform:scaleY(1);}100%{transform:scaleY(0);}}
+
+@media (max-width:640px){
+  #cover{display:flex;flex-direction:column;padding:100px var(--gutter) 20px;}
+  #cover > *:not(.cover-panel){position:static;transform:none;}
+  .cover-masthead-wrap{text-align:center;order:1;padding-inline:0;}
+  .cover-masthead{font-size:clamp(48px,16vw,88px);}
+  .cover-lines{order:2;margin-top:18px;max-width:none;}
+  .hero-rima-wrap{position:absolute !important;bottom:0;left:50%;transform:translateX(-50%) !important;order:3;}
+  .hero-rima,.hero-rima-placeholder{height:48svh;}
+  .cover-credit{order:4;margin-top:auto;padding-top:14px;}
+  .cover-meta-right{order:5;text-align:left;padding-top:6px;}
+  .scroll-cue{display:none;}
+}
+
+/* ============================= TICKER ============================= */
+.ticker{
+  background:var(--sand);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+  height:64px;overflow:hidden;display:flex;align-items:center;position:relative;
+}
+.ticker-track{
+  display:flex;align-items:center;gap:0;white-space:nowrap;
+  animation:ticker-scroll 40s linear infinite;
+}
+.ticker:hover .ticker-track{animation-play-state:paused;}
+.ticker-item{
+  font-family:var(--f-mono);font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink);
+  display:flex;align-items:center;gap:20px;padding-inline:20px;
+}
+.ticker-cat{width:20px;height:20px;flex:none;}
+@keyframes ticker-scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ============================= SECTIONS GENERAL ============================= */
+section{padding-block:96px;}
+.hairline{border:none;border-top:1px solid rgba(22,50,79,0.18);margin:0;}
+.section-label{color:var(--ink);}
+
+/* ============================= EDITOR'S LETTER ============================= */
+#editors-letter{background:var(--paper);}
+#editors-letter .standfirst{margin-bottom:28px;}
+#editors-letter .closing-note{margin-top:24px;font-style:normal;}
+
+/* ============================= KEY TABLE ============================= */
+#the-key{background:var(--sand-light);padding-block:72px;}
+.key-title{margin-bottom:24px;}
+.key-table{width:100%;border-collapse:collapse;}
+.key-table tr{border-top:1px solid rgba(22,50,79,0.18);}
+.key-table tr:last-child{border-bottom:1px solid rgba(22,50,79,0.18);}
+.key-table td{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  padding:16px 12px;vertical-align:top;
+}
+.key-table td:first-child{color:var(--ink);opacity:0.85;width:38%;}
+.key-table td:last-child{color:var(--signal);}
+
+/* ============================= CHAPTER BREAKS ============================= */
+#dept-01{--accent:var(--marigold);}
+#dept-02{--accent:var(--signal);}
+#dept-03{--accent:var(--terracotta);}
+
+.dept-ground-sand{background:var(--sand);}
+.dept-ground-paper{background:var(--paper);}
+
+.dept-break-region{height:150svh;}
+.dept-break{
+  position:sticky;top:0;height:100svh;overflow:hidden;
+  background:var(--accent);color:var(--ink);
+}
+.dept-break-inner{
+  position:relative;height:100%;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:0 var(--gutter) clamp(110px,18svh,170px);
+}
+.dept-break-row{display:flex;align-items:baseline;gap:clamp(16px,3vw,40px);flex-wrap:wrap;}
+.dept-break-numeral{
+  font-weight:300;font-size:clamp(180px,38vw,520px);line-height:0.75;
+  letter-spacing:-0.04em;margin-left:calc(var(--gutter) * -1 - 0.06em);
+  opacity:0;transition:opacity 300ms ease-out;
+}
+.dept-break.pinned .dept-break-numeral{opacity:1;}
+.dept-break-name{
+  font-weight:400;font-size:clamp(56px,9vw,128px);letter-spacing:-0.03em;line-height:0.9;margin:0;
+}
+.dept-break-standfirst{
+  font-size:clamp(24px,3vw,38px);line-height:1.15;max-width:34rem;
+  margin-top:clamp(20px,4vh,44px);align-self:flex-end;margin-right:clamp(0px,4vw,80px);
+}
+.dept-break-meta{position:absolute;bottom:30px;left:var(--gutter);}
+.dept-break-contents{position:absolute;bottom:30px;right:var(--gutter);text-align:right;}
+.dept-break-contents p{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  line-height:2;opacity:0.85;
+}
+.dept-break-cue{
+  position:absolute;bottom:22px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.dept-break-cue .mono{font-size:10px;}
+.dept-break-cue-line{
+  width:1px;height:24px;background:currentColor;opacity:0.45;transform-origin:top;
+  animation:scrollcue 1.6s ease-in-out infinite;
+}
+
+/* dept-02 sits on --signal, a dark ground: the one permitted exception to ink-only text */
+#dept-02 .dept-break{color:var(--paper);}
+
+@media (max-width:760px){
+  .dept-break-inner{justify-content:flex-start;padding-top:100px;}
+  .dept-break-standfirst{align-self:flex-start;margin-right:0;font-size:clamp(19px,4.6vw,26px);}
+  .dept-break-meta{position:static;margin-top:auto;padding-bottom:8px;}
+  .dept-break-contents{position:static;text-align:left;padding-bottom:64px;}
+  .dept-break-cue{bottom:16px;}
+}
+
+/* spec panel background depends on department ground */
+.dept-ground-sand .spec-panel{background:var(--chalk);}
+.dept-ground-paper .spec-panel{background:var(--sand-light);}
+
+/* ============================= HORIZONTAL RAIL ============================= */
+.index-rail-wrap{padding-block:32px 48px;}
+.index-rail{
+  display:flex;gap:16px;overflow-x:auto;padding:0 var(--gutter) 20px;
+  cursor:grab;
+  scrollbar-width:none;
+}
+@media (hover:none){
+  .index-rail{scroll-snap-type:x mandatory;}
+  .rail-card{scroll-snap-align:start;}
+}
+.index-rail::-webkit-scrollbar{display:none;}
+.index-rail.dragging{cursor:grabbing;}
+.index-rail.dragging *{pointer-events:none;}
+.rail-card{
+  flex:0 0 clamp(220px,26vw,300px);
+  background:var(--sand-light);border:1px solid rgba(22,50,79,0.18);
+  text-decoration:none;color:var(--ink);
+  display:flex;flex-direction:column;
+}
+.rail-card-media{aspect-ratio:4/5;overflow:hidden;position:relative;flex:none;}
+.rail-card-media img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transform:scale(1);transition:transform 400ms var(--ease);
+}
+.rail-card:hover .rail-card-media img{transform:scale(1.04);}
+.rail-card-media .media-placeholder{width:100%;height:100%;aspect-ratio:auto;border-width:0 0 1px 0;}
+.rail-card-body{padding:16px 20px 20px;}
+.rail-card .num{font-family:var(--f-mono);font-size:11px;letter-spacing:0.1em;color:var(--accent, var(--terracotta));}
+.rail-card h3{
+  font-family:var(--f-display);font-variation-settings:'SOFT' 0,'WONK' 1,'opsz' 144;font-size:24px;font-weight:400;
+  margin-top:8px;line-height:1.05;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:4px;
+  transition:text-decoration-color 220ms ease-out;
+}
+.rail-card:hover h3{text-decoration-color:var(--signal);}
+.rail-card .spec-mini{font-family:var(--f-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;opacity:0.7;margin-top:10px;line-height:1.5;}
+.rail-progress-track{height:2px;background:rgba(22,50,79,0.15);margin-inline:var(--gutter);position:relative;}
+.rail-progress-fill{height:2px;background:var(--signal);width:20%;transition:width 60ms linear;}
+
+/* ============================= ARTICLE SKELETON ============================= */
+.article{padding-block:88px;position:relative;}
+.article-num{color:var(--accent, var(--terracotta));margin-bottom:14px;display:block;}
+.article-hairline{margin-bottom:32px;}
+.article .standfirst{margin-bottom:36px;}
+.spec-panel{
+  border:1px solid rgba(22,50,79,0.18);padding:18px 20px;margin-bottom:36px;
+}
+.spec-row{display:flex;gap:16px;padding:8px 0;border-top:1px solid rgba(22,50,79,0.12);}
+.spec-row:first-child{border-top:none;}
+.spec-row dt{font-family:var(--f-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);opacity:0.6;flex:0 0 34%;}
+.spec-row dd{font-family:var(--f-mono);font-size:11px;letter-spacing:0.04em;text-transform:uppercase;margin:0;flex:1;}
+.spec-timeline{padding:10px 0 14px;border-top:1px solid rgba(22,50,79,0.12);}
+.spec-timeline-cells{display:flex;gap:2px;}
+.spec-timeline-cell{flex:1;height:6px;background:rgba(22,50,79,0.12);}
+.spec-timeline-cell.active{background:var(--accent, var(--terracotta));}
+.spec-timeline-labels{display:flex;justify-content:space-between;margin-top:6px;font-family:var(--f-mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink);opacity:0.5;}
+.what-changed{margin-top:36px;padding-top:20px;border-top:1px solid var(--accent, var(--terracotta));}
+.what-changed .label{color:var(--ink);opacity:0.55;display:block;margin-bottom:8px;}
+.what-changed p{font-family:var(--f-display);font-variation-settings:'SOFT' 0,'WONK' 1,'opsz' 144;font-size:clamp(19px,2vw,24px);font-weight:400;}
+.article-closing{margin-top:40px;}
+blockquote.pull-quote{border-left:2px solid var(--terracotta);padding-left:24px;}
+details.expand{margin-top:8px;}
+details.expand summary{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  cursor:pointer;color:var(--signal);padding:10px 0;list-style:none;
+}
+details.expand summary::-webkit-details-marker{display:none;}
+details.expand summary::before{content:'+ ';}
+details.expand[open] summary::before{content:'\2212 ';}
+details.expand p{margin-top:12px;max-width:34rem;}
+
+/* ============================= INVERSION ============================= */
+.inversion{
+  background:var(--ink);color:var(--sand);padding-block:100px;margin-block:60px;
+}
+.inversion .pull-quote{color:var(--sand);}
+.inversion .support{margin-top:28px;max-width:38rem;opacity:0.85;font-size:clamp(17px,1.3vw,20px);line-height:1.6;}
+.inversion .mono{color:var(--sand);opacity:0.7;}
+
+/* ============================= DRAG LENS ============================= */
+.lens-wrap{margin-top:40px;}
+.lens-frame{
+  position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;
+  border:1px solid var(--ink);cursor:none;
+}
+.lens-layer{position:absolute;inset:0;}
+.lens-after{clip-path:circle(90px at 50% 50%);}
+.lens-cursor{
+  position:absolute;width:180px;height:180px;border:1px solid var(--ink);border-radius:50%;
+  pointer-events:none;transform:translate(-50%,-50%);
+  backdrop-filter:saturate(1.15);-webkit-backdrop-filter:saturate(1.15);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,0.4);
+}
+.lens-cursor::after{
+  content:'';position:absolute;top:50%;left:50%;width:8px;height:8px;border-radius:50%;
+  background:var(--signal);transform:translate(-50%,-50%);
+}
+.lens-caption{font-family:var(--f-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;text-align:center;margin-top:14px;color:var(--ink);opacity:0.7;}
+.lens-slider{display:none;}
+@media (hover:none){
+  .lens-frame{cursor:default;}
+  .lens-cursor{display:none;}
+  .lens-after{clip-path:inset(0 50% 0 0);}
+  .lens-slider{display:block;width:100%;margin-top:16px;accent-color:var(--signal);}
+}
+.listing-mock{
+  position:absolute;inset:0;background:var(--sand-light);padding:24px;display:flex;flex-direction:column;gap:10px;
+}
+.listing-mock .icon{width:56px;height:56px;background:var(--ink);flex:none;}
+.listing-mock h4{font-family:var(--f-body);font-weight:600;font-size:15px;}
+.listing-mock .stars{font-family:var(--f-mono);font-size:11px;color:var(--terracotta);}
+.listing-mock .kw{font-family:var(--f-mono);font-size:10px;opacity:0.7;line-height:1.6;}
+.listing-mock.before{background:var(--sand-light);}
+.listing-mock.after{background:var(--chalk);}
+.listing-mock .kw.messy{color:var(--terracotta);}
+
+/* ============================= PINNED WALKTHROUGH ============================= */
+.walkthrough{display:grid;grid-template-columns:1fr 1fr;column-gap:48px;margin-top:20px;}
+.walk-step{padding-block:60px;border-top:1px solid rgba(22,50,79,0.12);}
+.walk-step:first-child{border-top:none;padding-top:0;}
+.step-num{font-family:var(--f-mono);font-size:13px;letter-spacing:0.1em;color:var(--ink);opacity:0.35;transition:color 300ms,opacity 300ms;display:block;margin-bottom:10px;}
+.walk-step.active .step-num{color:var(--accent, var(--terracotta));opacity:1;}
+.walk-step h3{font-family:var(--f-display);font-variation-settings:'SOFT' 0,'WONK' 1,'opsz' 144;font-size:26px;font-weight:400;margin-bottom:10px;}
+.walk-step p{max-width:32rem;}
+.walk-visual-mobile{display:none;}
+.walk-sticky{position:sticky;top:12vh;height:min-content;background:var(--sand);padding:40px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;}
+.walk-visual{position:absolute;opacity:0;transition:opacity 400ms ease-out;width:calc(100% - 80px);}
+.walk-visual.active{position:relative;opacity:1;}
+
+@media (max-width:900px){
+  .walkthrough{grid-template-columns:1fr;}
+  .walk-sticky{display:none;}
+  .walk-visual-mobile{display:block;background:var(--sand);padding:32px;margin-bottom:20px;aspect-ratio:16/10;}
+  .walk-visual-mobile svg{width:100%;height:100%;}
+}
+
+/* ============================= LETTERS ============================= */
+.letters-block{background:var(--sand-light);border:1px solid rgba(22,50,79,0.18);padding:40px clamp(24px,5vw,56px);margin-block:clamp(2rem,4vh,3rem);}
+.letters-block .pull-quote{margin-bottom:24px;}
+.letters-quote{
+  font-family:var(--f-display);font-variation-settings:'SOFT' 0,'WONK' 1,'opsz' 144;font-weight:400;
+  font-size:clamp(22px,2.6vw,32px);line-height:1.2;letter-spacing:-0.01em;margin-bottom:20px;
+}
+.letters-block .attribution{color:var(--ink);opacity:0.7;}
+.letter-placeholder{color:var(--terracotta);}
+
+.letter-signoff{margin-top:1.6em;letter-spacing:0.08em;}
+
+.body-copy ol{padding-left:1.4em;max-width:34rem;margin-top:1.1em;}
+.body-copy ol li{margin-bottom:0.7em;}
+
+.references-list{font-family:var(--f-mono);font-size:11px;line-height:1.9;color:var(--ink);}
+.references-list li{padding-left:1.4em;text-indent:-1.4em;margin-bottom:14px;overflow-wrap:break-word;}
+.reference-placeholder{color:var(--ink);}
+
+.colophon-body p{font-size:clamp(15px,1.05vw,17px);line-height:1.7;color:var(--sand);opacity:0.9;max-width:34rem;}
+.colophon-body p + p{margin-top:1em;}
+
+/* ============================= COLOPHON ============================= */
+#colophon{background:var(--ink);color:var(--sand);padding-block:100px;}
+#colophon .grid12{row-gap:48px;}
+.colophon-credits p{margin-bottom:10px;font-family:var(--f-mono);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;}
+.colophon-refs{font-family:var(--f-mono);font-size:11px;line-height:1.9;}
+.colophon-refs li{padding-left:1.4em;text-indent:-1.4em;margin-bottom:12px;opacity:0.85;}
+.colophon h2{color:var(--sand);margin-bottom:24px;}
+
+/* ============================= FOOTER ============================= */
+footer{padding:32px var(--gutter);}
+footer p{font-family:var(--f-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;opacity:0.75;}
+
+/* ============================= RIMA ============================= */
+#rima{
+  position:fixed;top:0;left:0;width:44px;height:44px;pointer-events:none;z-index:90;
+  opacity:0;transition:opacity 600ms var(--ease);
+}
+#rima.visible{opacity:1;}
+#rima.idle{opacity:0.25;}
+#rima svg{width:100%;height:100%;overflow:visible;}
+#rima .rima-photo{width:100%;height:100%;object-fit:contain;display:block;}
+#rima.hovering{transform:scale(1.3) rotate(8deg);}
+.rima-prop{opacity:0;transition:opacity 400ms ease-out;}
+.rima-prop.active{opacity:1;}
+
+@media (hover:none), (pointer:coarse){
+  #rima{display:none;}
+}
+
+/* ============================= REDUCED MOTION ============================= */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;}
+  #gate{transition:opacity 400ms linear;}
+  .cover-panel{transition:none;}
+  .ticker-track{animation:none;white-space:normal;flex-wrap:wrap;position:static;}
+  .reveal{transition:opacity 400ms linear;transform:none;}
+  #rima{display:none;}
+  .walk-visual{transition:none;}
+  .dept-break-region{height:auto;}
+  .dept-break{position:relative;}
+  .dept-break-numeral{opacity:1;}
+  .dept-break-cue-line,.scroll-cue-line{animation:none;transform:scaleY(1);}
+}
+</style>
+</head>
+<body>
+<!-- ============================= GATE ============================= -->
+<div id="gate" role="dialog" aria-label="Issue loading">
+  <p class="gate-label">Going to press</p>
+  <p class="gate-counter" id="gateCounter">0</p>
+  <p class="gate-issue">Issue 01 / Marketing &amp; Operations</p>
+  <button class="gate-skip-link" id="gateSkip">Skip &rarr;</button>
+</div>
+
+<!-- ============================= NAV ============================= -->
+<nav class="site-nav">
+  <a href="#cover" class="wordmark">Field Notes</a>
+  <div class="nav-links" id="navLinks">
+    <a href="#dept-01" data-dept="dept-01">Marketing</a>
+    <a href="#dept-02" data-dept="dept-02">Operations</a>
+    <a href="#dept-03" data-dept="dept-03">Overall</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navOverlay">Contents</button>
+</nav>
+<div class="nav-overlay" id="navOverlay">
+  <button class="nav-overlay-close" id="navOverlayClose">Close &times;</button>
+  <a href="#dept-01">Marketing</a>
+  <a href="#dept-02">Operations</a>
+  <a href="#dept-03">Overall</a>
+</div>
+
+<!-- ============================= PROGRESS RAIL ============================= -->
+<div class="progress-rail" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-ticks" aria-hidden="true">
+  <span data-dept="dept-01">01</span>
+  <span data-dept="dept-02">02</span>
+  <span data-dept="dept-03">03</span>
+</div>
+
+<!-- ============================= RIMA ============================= -->
+<div id="rima" aria-hidden="true">
+  <img id="rimaCursorImg" class="rima-photo" src="assets/rima-cursor.png" alt=""
+    onerror="this.style.display='none';document.getElementById('rimaCursorSvg').style.display='block';">
+  <svg id="rimaCursorSvg" style="display:none;" viewBox="0 0 44 44">
+    <g class="tail"><ellipse cx="8" cy="30" rx="9" ry="4" style="fill:var(--ink)" transform="rotate(-30 8 30)"/></g>
+    <ellipse class="body" cx="22" cy="26" rx="14" ry="10" style="fill:var(--ink)"/>
+    <path class="ear ear1" d="M13 16 L18 6 L21 17 Z" style="fill:var(--ink)"/>
+    <path class="ear ear2" d="M31 16 L26 6 L23 17 Z" style="fill:var(--ink)"/>
+    <circle cx="22" cy="24" r="7" style="fill:var(--sand)"/>
+    <g class="rima-prop prop-marketing">
+      <rect x="27" y="12" width="12" height="8" style="fill:var(--ink)"/>
+      <rect x="27" y="12" width="12" height="3" style="fill:var(--sand)"/>
+    </g>
+    <g class="rima-prop prop-operations">
+      <rect x="28" y="10" width="10" height="14" style="fill:var(--ink)"/>
+      <rect x="30" y="8" width="6" height="3" style="fill:var(--ink)"/>
+    </g>
+    <g class="rima-prop prop-overall">
+      <circle cx="31" cy="17" r="4" style="fill:none;stroke:var(--ink);stroke-width:1.5"/>
+      <circle cx="39" cy="17" r="4" style="fill:none;stroke:var(--ink);stroke-width:1.5"/>
+      <line x1="35" y1="17" x2="35" y2="17" style="stroke:var(--ink);stroke-width:1.5"/>
+    </g>
+  </svg>
+</div>
+
+<main>
+
+<!-- ============================= 01. COVER / LANDING ============================= -->
+<header id="cover">
+  <div class="cover-panel" id="coverPanel"></div>
+
+  <div class="cover-masthead-wrap">
+    <p class="cover-masthead f-display">Field Notes</p>
+    <p class="mono cover-sub-masthead">Issue 01 &middot; Eight Weeks &middot; One Ride-Hailing App</p>
+  </div>
+
+  <div class="hero-rima-wrap" id="heroRimaWrap">
+    <div class="hero-rima-shadow" aria-hidden="true"></div>
+    <img id="heroRimaImg" class="hero-rima" src="assets/rima-hero.png" alt="Rima, a cat, sitting." width="900" height="1100"
+      onerror="this.style.display='none';document.getElementById('heroRimaPlaceholder').style.display='flex';">
+    <div id="heroRimaPlaceholder" class="hero-rima-placeholder">Rima hero / 2400px tall / transparent PNG</div>
+  </div>
+
+  <div class="cover-lines">
+    <p><span class="mono cover-line-mark">-</span>A campaign the platform refused to run.</p>
+    <p><span class="mono cover-line-mark">-</span>A report that argued against spending money.</p>
+    <p><span class="mono cover-line-mark">-</span>A man at a booth who was right.</p>
+  </div>
+  <p class="mono cover-credit">Cursor: Rima, staff cat and talent, GeoPets series</p>
+  <p class="mono cover-meta-right">Nine articles &middot; Eight weeks &middot; Roughly twelve minutes</p>
+
+  <div class="scroll-cue" aria-hidden="true">
+    <span class="mono">Scroll</span>
+    <span class="scroll-cue-line"></span>
+  </div>
+</header>
+
+<!-- ============================= 02. TICKER ============================= -->
+<div class="ticker" role="marquee" aria-label="Issue summary, scrolling">
+  <div class="ticker-track" id="tickerTrack">
+    <!-- duplicated twice for seamless loop -->
+  </div>
+</div>
+
+<!-- ============================= 03. EDITOR'S LETTER ============================= -->
+<section id="editors-letter">
+  <div class="grid12">
+    <p class="mono rail article-num">Editor's Letter</p>
+    <div class="measure reveal">
+      <p class="standfirst f-display">On being unknown</p>
+      <div class="body-copy lede">
+        <p>Singapore's point-to-point transport market is one of the most contested in the region. Daily trips climbed from roughly 517,000 in 2020 to around 613,000 by July 2023, while the taxi fleet more than halved over a decade, from about 28,700 vehicles in 2014 to 13,100 in 2024 (Land Transport Authority, 2023). Private hire absorbed the difference. Into that market, a handful of smaller operators compete against incumbents with vastly larger budgets and near-total public recognition.</p>
+        <p>Geolah is one of them. It runs standard rides, pet-friendly rides, six-seaters, metered taxi trips and parcel delivery. It has drivers, an app, a licence, and a name that, in April this year, I had never heard.</p>
+        <p>I applied the way every student applies. A CV, a portal, a list of roles, and no particular conviction about which one I wanted. What I expected was eight weeks of fulfilling assigned duties competently enough to secure a grade.</p>
+        <p>What I found was a company with a problem I could not have described before I arrived. Geolah's difficulty was not that people had tried it and disliked it. It was that almost nobody had encountered it at all. In my first week I searched for what existed publicly and found, outside the announcement of the company's ride-hail operator licence, almost nothing. There was no perception to correct. That sounds like the easier problem. It is not, because it also meant nothing about the company was distinctive enough for anyone to argue with.</p>
+        <p>This issue is an account of eight weeks spent working on that, alongside two fellow interns, Anthea and Reona, a marketing team, and a supervisor who let me take on more than my scope described.</p>
+        <p>Some of what follows worked. The more useful parts did not. There is an article here about a campaign the platform refused to run, one about a report that argued against spending money, and one about a man at a booth who spent twenty minutes telling me our incentives were not good enough, and was right.</p>
+        <p>I have written this as a magazine because the work was episodic rather than continuous, and because the honest shape of an internship is not a smooth narrative arc but a series of separate collisions with things you did not know.</p>
+        <p>The thanks belong in the colophon. What belongs here is the observation that most of what I learned in these eight weeks was not taught to me. It was demonstrated, in passing, by people who had no idea they were teaching.</p>
+        <p class="mono letter-signoff">Danial [surname], [course], Ngee Ann Polytechnic</p>
+        <p class="closing-note">You will notice a cat following your cursor. She is on the payroll, in a sense, and Department 01 explains why.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= 04. THE KEY ============================= -->
+<section id="the-key">
+  <div class="grid12">
+    <p class="mono rail">04 / Key</p>
+    <div class="measure reveal" style="grid-column:4/13;max-width:none;">
+      <p class="mono key-title">How to read this issue</p>
+      <table class="key-table">
+        <tr><td>What I was assigned</td><td>Departments 01 &amp; 02</td></tr>
+        <tr><td>What I learned doing it</td><td>Every article, "What Changed"</td></tr>
+        <tr><td>What I learned about the industry</td><td>Corrections &amp; Clarifications, closing observation</td></tr>
+        <tr><td>How I added value</td><td>Spec panels + What They Actually Valued</td></tr>
+        <tr><td>What I took away</td><td>Corrections &amp; Clarifications</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= 05. DEPARTMENT 01 MARKETING ============================= -->
+<section id="dept-01" class="dept-ground-sand">
+  <div class="dept-break-region">
+    <div class="dept-break">
+      <div class="dept-break-inner">
+        <div class="dept-break-row">
+          <span class="dept-break-numeral f-display" aria-hidden="true">01</span>
+          <h2 class="dept-break-name f-display">Marketing</h2>
+        </div>
+        <p class="dept-break-standfirst f-display">Introducing a company nobody had heard of, one post at a time.</p>
+        <p class="mono dept-break-meta">Chapter 01 &middot; Six articles &middot; Weeks 1&ndash;8</p>
+        <div class="dept-break-contents mono" aria-label="Chapter contents">
+          <p>01&ensp;The Daily Post</p>
+          <p>02&ensp;Fifty Fifty</p>
+          <p>03&ensp;The Number I Did Not Want to Look At</p>
+          <p>04&ensp;Snips and Snipes</p>
+          <p>05&ensp;The Listing Problem</p>
+          <p>06&ensp;The Campaign the Platform Would Not Run</p>
+        </div>
+        <div class="dept-break-cue" aria-hidden="true">
+          <span class="mono">Turn the page &darr;</span>
+          <span class="dept-break-cue-line"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="index-rail-wrap">
+    <div class="index-rail" id="rail-01">
+      <a class="rail-card" href="#art-01">
+        <div class="rail-card-media">
+          <img src="assets/art-01-cover.jpg" alt="Cover image for The Daily Post" loading="lazy" decoding="async" onerror="window.mediaFallback(this)">
+          <div class="media-placeholder" style="display:none;">Image slot &middot; art-01-cover.jpg &middot; 4:5</div>
+        </div>
+        <div class="rail-card-body">
+          <span class="num">01</span>
+          <h3 class="f-display">The Daily Post</h3>
+          <p class="spec-mini">Weeks 1&ndash;8 &middot; daily content</p>
+        </div>
+      </a>
+      <a class="rail-card" href="#art-02">
+        <div class="rail-card-media">
+          <img src="assets/art-02-cover.jpg" alt="Cover image for Fifty Fifty" loading="lazy" decoding="async" onerror="window.mediaFallback(this)">
+          <div class="media-placeholder" style="display:none;">Image slot &middot; art-02-cover.jpg &middot; 4:5</div>
+        </div>
+        <div class="rail-card-body">
+          <span class="num">02</span>
+          <h3 class="f-display">Fifty Fifty</h3>
+          <p class="spec-mini">Weeks 1&ndash;8 &middot; content calendar</p>
+        </div>
+      </a>
+      <a class="rail-card" href="#art-03">
+        <div class="rail-card-media">
+          <img src="assets/art-03-cover.jpg" alt="Cover image for The Number I Did Not Want to Look At" loading="lazy" decoding="async" onerror="window.mediaFallback(this)">
+          <div class="media-placeholder" style="display:none;">Image slot &middot; art-03-cover.jpg &middot; 4:5</div>
+        </div>
+        <div class="rail-card-body">
+          <span class="num">03</span>
+          <h3 class="f-display">The Number I Did Not Want to Look At</h3>
+          <p class="spec-mini">Weeks 1&ndash;8 &middot; tracking workbook</p>
+        </div>
+      </a>
+      <a class="rail-card" href="#art-04">
+        <div class="rail-card-media">
+          <img src="assets/art-04-cover.jpg" alt="Cover image for Snips and Snipes" loading="lazy" decoding="async" onerror="window.mediaFallback(this)">
+          <div class="media-placeholder" style="display:none;">Image slot &middot; art-04-cover.jpg &middot; 4:5</div>
+        </div>
+        <div class="rail-card-body">
+          <span class="num">04</span>
+          <h3 class="f-display">Snips and Snipes</h3>
+          <p class="spec-mini">Weeks 1&ndash;8 &middot; [n] videos cut</p>
+        </div>
+      </a>
+      <a class="rail-card" href="#art-05">
+        <div class="rail-card-media">
+          <img src="assets/art-05-cover.jpg" alt="Cover image for The Listing Problem" loading="lazy" decoding="async" onerror="window.mediaFallback(this)">
+          <div class="media-placeholder" style="display:none;">Image slot &middot; art-05-cover.jpg &middot; 4:5</div>
+        </div>
+        <div class="rail-card-body">
+          <span class="num">05</span>
+          <h3 class="f-display">The Listing Problem</h3>
+          <p class="spec-mini">ASO audit &middot; adopted</p>
+        </div>
+      </a>
+      <a class="rail-card" href="#art-06">
+        <div class="rail-card-media">
+          <img src="assets/art-06-cover.jpg" alt="Cover image for The Campaign the Platform Would Not Run" loading="lazy" decoding="async" onerror="window.mediaFallback(this)">
+          <div class="media-placeholder" style="display:none;">Image slot &middot; art-06-cover.jpg &middot; 4:5</div>
+        </div>
+        <div class="rail-card-body">
+          <span class="num">06</span>
+          <h3 class="f-display">The Campaign the Platform Would Not Run</h3>
+          <p class="spec-mini">Rejected &middot; rewritten twice</p>
+        </div>
+      </a>
+    </div>
+    <div class="rail-progress-track"><div class="rail-progress-fill" data-rail-fill="rail-01"></div></div>
+  </div>
+
+  <!-- ARTICLE 01 : THE DAILY POST -->
+  <article class="article" id="art-01">
+    <div class="grid12">
+      <div class="rail">
+        <span class="mono article-num">Article 01 / Marketing</span>
+        <hr class="hairline article-hairline">
+      </div>
+      <div class="measure reveal">
+        <p class="standfirst f-display">Geolah's problem was not that people disliked it. Almost nobody had heard of it.</p>
+        <dl class="spec-panel">
+          <div class="spec-row"><dt>Weeks</dt><dd>1&ndash;8</dd></div>
+          <div class="spec-timeline" aria-hidden="true">
+            <div class="spec-timeline-cells"><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div></div>
+            <div class="spec-timeline-labels"><span>Week 1</span><span>Week 8</span></div>
+          </div>
+          <div class="spec-row"><dt>Tools</dt><dd>TikTok, Instagram, CapCut, Google Sheets</dd></div>
+          <div class="spec-row"><dt>Deliverable</dt><dd>[n] posts produced or captioned</dd></div>
+        </dl>
+        <div class="body-copy">
+          <p>Growing Geolah's presence across social platforms was the first task I was given, and it was the one the company treated as most urgent. Before proposing anything, I spent time on what I assumed would be a formality: finding out what already existed.</p>
+          <p>There was almost nothing. Outside the announcement of the ride-hail operator licence, the company had left virtually no public trace. I checked again, assuming I had searched badly. I had not.</p>
+        </div>
+        <figure class="figure">
+          <figcaption>The public record before I arrived. Search results, week one.</figcaption>
+          <img class="figure-img" src="assets/art-01-fig-01.jpg" alt="Search results for Geolah in week one, showing almost no public record" loading="lazy" decoding="async" style="--ar:4/5;" onerror="window.mediaFallback(this)">
+          <div class="media-placeholder" style="--ar:4/5;display:none;">Image slot &middot; ART-01 &middot; 4:5 &middot; replace with art-01-fig-01.jpg</div>
+        </figure>
+        <div class="body-copy">
+          <p>That absence turned out to be the actual brief, and it reframed the task entirely. We were not repairing a reputation or correcting a misunderstanding. We were introducing something. It sounds like the easier of the two jobs, and for the first fortnight I treated it that way. It is not easier, because a company nobody has heard of is also a company nobody has any reason to think about, and indifference is harder to move than disagreement.</p>
+          <p>The team settled on daily posting across TikTok and Instagram. I produced [n] of those posts and wrote captions for [n] more.</p>
+          <p>I argued for weighting effort towards TikTok rather than splitting evenly between the two. My reasoning was that TikTok distributes to non-followers by default, while Instagram's reach through Explore and Reels leans more heavily on an audience you already have. When your follower count is close to zero, that difference decides everything: one platform will show your work to strangers, and the other largely will not.</p>
+          <p>This was the first time the audience-building concepts from our Digital and Traditional Marketing Strategies module met a brand with no audience at all, and the encounter was instructive. Much of what we had been taught assumed a starting point we did not have. The frameworks described maintenance. We needed a cold start, which is a different problem wearing similar language.</p>
+          <p>Bookings rose over the same period, and for a while I let myself believe I knew why. I no longer think I can say that. Driver incentives were running concurrently, alongside seasonal effects I never controlled for, and I would want tagged links and a quiet week to compare against before claiming my posts caused anything. What I can evidence is reach.</p>
+          <p>That distinction took me most of the internship to accept, and it is the thing I carried out of this task. A number moving while you are in the room is not the same as a number moving because you were. I ask now what else was running before I ask what I did.</p>
+        </div>
+        <div class="what-changed">
+          <span class="mono label">What changed</span>
+          <p>I ask what else was running before I ask what I did.</p>
+        </div>
+      </div>
+      <div class="margin">
+        <p class="marginalia">Eight weeks is long enough to learn that "it went up" and "I made it go up" are different sentences.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- ARTICLE 02 : FIFTY FIFTY -->
+  <article class="article" id="art-02">
+    <div class="grid12">
+      <div class="rail">
+        <span class="mono article-num">Article 02 / Marketing</span>
+        <hr class="hairline article-hairline">
+      </div>
+      <div class="measure reveal">
+        <p class="standfirst f-display">We were taught eighty twenty. I ran fifty fifty. This is the argument for both.</p>
+        <dl class="spec-panel">
+          <div class="spec-row"><dt>Weeks</dt><dd>1&ndash;8</dd></div>
+          <div class="spec-timeline" aria-hidden="true">
+            <div class="spec-timeline-cells"><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div></div>
+            <div class="spec-timeline-labels"><span>Week 1</span><span>Week 8</span></div>
+          </div>
+          <div class="spec-row"><dt>Tools</dt><dd>Excel, Google Docs</dd></div>
+          <div class="spec-row"><dt>Deliverable</dt><dd>A content calendar tracking dates, formats, captions and engagement</dd></div>
+        </dl>
+        <div class="body-copy">
+          <p>A posting cadence is only a cadence if something is planned to fill it. Committing to daily content is easy in a meeting and considerably less easy on a Tuesday afternoon when nobody has an idea.</p>
+          <p>So I built the calendar across two surfaces. A spreadsheet held the schedule, the formats and the performance figures. A separate document held ideation, so that half-formed ideas had somewhere to live without cluttering the thing we actually worked from. Colleagues in the marketing team showed me which columns were worth tracking, which turned out to be fewer than I had assumed, and the version I ended with carried dates, formats, captions and engagement rates.</p>
+        </div>
+        <figure class="figure">
+          <figcaption>The calendar, mid-May. Redacted where sensitive.</figcaption>
+          <img class="figure-img" src="assets/art-02-fig-01.jpg" alt="The content calendar spreadsheet in mid-May, redacted where sensitive" loading="lazy" decoding="async" style="--ar:4/5;" onerror="window.mediaFallback(this)">
+          <div class="media-placeholder" style="--ar:4/5;display:none;">Image slot &middot; ART-02 &middot; 4:5 &middot; replace with art-02-fig-01.jpg</div>
+        </figure>
+        <div class="body-copy">
+          <p>The decision worth explaining is the ratio.</p>
+          <p>In our Digital and Traditional Marketing Strategies module we were taught to weight content roughly eighty per cent educational to twenty per cent entertainment. That guidance deserves stating properly rather than waving away, because it is well founded. Educational content builds authority. It attracts an audience with intent rather than idle attention. And it converts better, because someone who has learned something useful from a brand has a reason to trust that brand with a booking.</p>
+          <p>I ran fifty fifty instead, and I want to be honest that the decision felt uncomfortable at the time, because it meant departing from something I had been assessed on.</p>
+          <p>My reasoning was that eighty twenty assumes an audience that already knows who you are. Education presumes a relationship. It presumes someone has already decided you are worth listening to, and Geolah had not earned that from anybody. Educational content about a service nobody recognises is content nobody watches, however well made. Entertainment was the only mechanism available for reaching people cold, so I built that half around current trends and tied each one back to the service.</p>
+          <p>I would run it again at the start. I would also shift back towards education sooner than I did, and that is the part I got wrong. Somewhere in the middle weeks the audience stopped being entirely cold, and I kept running a ratio designed for strangers at people who were no longer strangers.</p>
+          <p>What I understand now is that the taught ratio was never a rule. It was an answer to a question about audience maturity, and the mistake was not deviating from it. The mistake was failing to ask the question again once the answer had changed.</p>
+        </div>
+        <div class="what-changed">
+          <span class="mono label">What changed</span>
+          <p>I ask the question the framework was answering before I follow the answer.</p>
+        </div>
+      </div>
+      <div class="margin">
+        <p class="marginalia">The textbook ratio is not wrong. It is written for a brand people can already name.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- ARTICLE 03 : THE NUMBER I DID NOT WANT TO LOOK AT + INVERSION -->
+  <article class="article" id="art-03">
+    <div class="grid12">
+      <div class="rail">
+        <span class="mono article-num">Article 03 / Marketing</span>
+        <hr class="hairline article-hairline">
+      </div>
+      <div class="measure reveal">
+        <p class="standfirst f-display">I spent most of school avoiding spreadsheets. The job made that untenable in week one.</p>
+        <dl class="spec-panel">
+          <div class="spec-row"><dt>Weeks</dt><dd>1&ndash;8</dd></div>
+          <div class="spec-timeline" aria-hidden="true">
+            <div class="spec-timeline-cells"><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div></div>
+            <div class="spec-timeline-labels"><span>Week 1</span><span>Week 8</span></div>
+          </div>
+          <div class="spec-row"><dt>Tools</dt><dd>Excel, TikTok analytics export</dd></div>
+          <div class="spec-row"><dt>Deliverable</dt><dd>Performance tracking workbook</dd></div>
+        </dl>
+        <div class="body-copy">
+          <p>Data was the part of this job I was worst at, and I should say plainly that I had spent most of school routing around anything requiring Excel. If a project could be divided, I took the half that did not involve a spreadsheet. It was not a considered strategy. It was avoidance, and it worked well enough that I never had to examine it.</p>
+          <p>It stopped working immediately. Performance tracking was mine, and there was no half of it that somebody else was going to take.</p>
+          <p>I asked for help rather than pretending, which took longer to decide than it should have. Colleagues and fellow interns walked me through the functions I needed, several of them more than once, and over [n] weeks I moved from being unable to structure a sheet to exporting TikTok analytics, cleaning them, and reading them without assistance.</p>
+          <p>Then came the part nobody warns you about, which is that retrieving a number and understanding one are entirely different skills, and being able to do the first can disguise being unable to do the second for quite a while.</p>
+        </div>
+        <figure class="figure">
+          <figcaption>The retention curve for the video I was proudest of. Most viewers left before the punchline.</figcaption>
+          <img class="figure-img" src="assets/art-03-fig-01.jpg" alt="A TikTok retention curve showing most viewers leaving before the video's punchline" loading="lazy" decoding="async" style="--ar:4/5;" onerror="window.mediaFallback(this)">
+          <div class="media-placeholder" style="--ar:4/5;display:none;">Image slot &middot; ART-03 &middot; 4:5 &middot; replace with art-03-fig-01.jpg</div>
+        </figure>
+        <div class="body-copy">
+          <p>What the data showed was where views and profile views were falling, and how far into each video attention actually held. The uncomfortable finding was about watch time, which was the metric that mattered most and the one I had never once looked at. I had been evaluating content by whether I liked it. The retention curve evaluated it by whether anyone stayed, and on several videos the answer was that most people left before the point of the video arrived. The joke I had built the thing around was not landing badly. It was not being seen.</p>
+          <p>There is no dignified way to describe reading that for the first time. I had spent hours on those cuts.</p>
+          <p>I changed the planning accordingly, front-loading the hook rather than building towards it, and the pattern in what followed improved.</p>
+          <p>The habit I kept is smaller than the lesson. I look at the distribution before the average, because an average conceals exactly the thing you need to know. And I decide the opening before I film, rather than hunting for one in footage that was never shot to contain it.</p>
+        </div>
+        <div class="what-changed">
+          <span class="mono label">What changed</span>
+          <p>I decide the opening before I film.</p>
+        </div>
+      </div>
+      <div class="margin">
+        <p class="marginalia">The uncomfortable part was not learning Excel. It was that the first thing the numbers said was that I had been wrong.</p>
+      </div>
+    </div>
+
+    <div class="inversion">
+      <div class="grid12">
+        <div class="rail">
+          <span class="mono">The Inversion</span>
+        </div>
+        <div class="measure reveal">
+          <blockquote class="pull-quote f-display">Retrieving a number and understanding one are entirely different skills, and being able to do the first can disguise being unable to do the second for quite a while.</blockquote>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ARTICLE 04 : SNIPS AND SNIPES -->
+  <article class="article" id="art-04">
+    <div class="grid12">
+      <div class="rail">
+        <span class="mono article-num">Article 04 / Marketing</span>
+        <hr class="hairline article-hairline">
+      </div>
+      <div class="measure reveal">
+        <p class="standfirst f-display">Three interns started at different skill levels. By week eight the questions were going in every direction.</p>
+        <dl class="spec-panel">
+          <div class="spec-row"><dt>Weeks</dt><dd>1&ndash;8</dd></div>
+          <div class="spec-timeline" aria-hidden="true">
+            <div class="spec-timeline-cells"><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div></div>
+            <div class="spec-timeline-labels"><span>Week 1</span><span>Week 8</span></div>
+          </div>
+          <div class="spec-row"><dt>Tools</dt><dd>CapCut</dd></div>
+          <div class="spec-row"><dt>Talent</dt><dd>Rima, domestic shorthair</dd></div>
+          <div class="spec-row"><dt>Deliverable</dt><dd>[n] videos cut</dd></div>
+        </dl>
+        <div class="body-copy">
+          <p>I arrived able to edit, but not well. I had cut video before for a small retail brand, which meant I knew where the buttons were without having much instinct for pacing, for sound, or for the moment a shot has outlived its usefulness and is only still there because I liked filming it.</p>
+          <p>Anthea and Reona had several years of editing experience between them, and it showed in the speed of their decisions more than anything else. When I got stuck, I asked.</p>
+        </div>
+        <figure class="figure">
+          <figcaption>Rima, mid-shoot. She was the easiest talent to book and the least cooperative to direct.</figcaption>
+          <img class="figure-img" src="assets/art-04-fig-01.jpg" alt="Rima the cat mid-shoot during a video production" loading="lazy" decoding="async" style="--ar:4/5;" onerror="window.mediaFallback(this)">
+          <div class="media-placeholder" style="--ar:4/5;display:none;">Image slot &middot; ART-04 &middot; 4:5 &middot; replace with art-04-fig-01.jpg</div>
+        </figure>
+        <div class="body-copy">
+          <p>The clearest instance was the first instalment of the Rima series. I had the footage and no idea how to hold anyone past the opening, and I sat with it long enough to know that sitting with it further was not going to solve anything. What I was given in response was not encouragement, which is what I had half expected. It was technique: where to cut, what to lose, and which part of the video was actually carrying the whole thing. That last question was the useful one, because until somebody asked it I had assumed all of it was equally important.</p>
+          <p>The change over eight weeks is easiest to describe as time. Decisions that once consumed an afternoon, on angle, on sound, on whether an effect earned its place, became decisions I made in the moment without much deliberation. Nothing about the craft got easier. I simply stopped needing to consciously reason through every step.</p>
+          <p>What I did not anticipate was the direction of the asking reversing. Somewhere in the second half of the attachment, questions started coming to me as well, and by the end we were consulting each other in every direction without much regard for who was supposed to be better at what.</p>
+          <p>I have thought about that more than the editing itself. On a small team where nobody has time to run formal training, that reciprocity is not simply a pleasant working atmosphere. It is the actual mechanism by which capability spreads, and its effect was to raise the team's editing floor rather than any one person's ceiling.</p>
+          <p>The change in me was smaller and less flattering. I had treated asking for help as a small admission of not belonging. It is the fastest tool available, and I wasted most of my first fortnight not using it.</p>
+        </div>
+        <div class="what-changed">
+          <span class="mono label">What changed</span>
+          <p>I ask early, and I answer when asked.</p>
+        </div>
+      </div>
+      <div class="margin">
+        <p class="marginalia">The cat was the easiest talent I worked with and the least cooperative. Both are true.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- ARTICLE 05 : THE LISTING PROBLEM + DRAG LENS -->
+  <article class="article" id="art-05">
+    <div class="grid12">
+      <div class="rail">
+        <span class="mono article-num">Article 05 / Marketing</span>
+        <hr class="hairline article-hairline">
+      </div>
+      <div class="measure reveal">
+        <p class="standfirst f-display">I was asked why the app ranked poorly. The metadata was not the reason.</p>
+        <dl class="spec-panel">
+          <div class="spec-row"><dt>Weeks</dt><dd>[n]&ndash;[n]</dd></div>
+          <div class="spec-timeline" aria-hidden="true">
+            <div class="spec-timeline-cells"><div class="spec-timeline-cell"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell"></div><div class="spec-timeline-cell"></div><div class="spec-timeline-cell"></div></div>
+            <div class="spec-timeline-labels"><span>Week 1</span><span>Week 8</span></div>
+          </div>
+          <div class="spec-row"><dt>Tools</dt><dd>App Store Connect, Google Play Console</dd></div>
+          <div class="spec-row"><dt>Deliverable</dt><dd>An App Store Optimisation audit and recommendations report</dd></div>
+          <div class="spec-row"><dt>Outcome</dt><dd>Adopted for implementation</dd></div>
+        </dl>
+        <div class="body-copy">
+          <p>App Store Optimisation was never in my assigned scope. I raised it because the numbers were visible from the first day and I could not stop noticing them.</p>
+          <p>On the App Store, Geolah's passenger app was rated 1.6 stars and the driver app 1.9. On Google Play, the figures were 1.7 and 2.3 (retrieved [date]). Both store algorithms weight rating and conversion when ranking apps within a category, which meant that competitors offering the same service in the same city were being surfaced ahead of us by design rather than by accident. From what I had learned in class about how ranking systems treat poor reviews, this looked less like a marketing problem and more like a structural one.</p>
+        </div>
+
+        <div class="lens-wrap">
+          <div class="lens-frame" id="lensFrame" role="img" aria-label="The Geolah listing before, and the recommended rewrite, revealed by dragging">
+            <div class="lens-layer listing-mock before">
+              <div class="icon" aria-hidden="true"></div>
+              <h4>Geolah, book rides, [competitor] alternative, cheap taxi</h4>
+              <p class="stars">&#9733; 1.6</p>
+              <p class="kw messy">keywords: taxi, cheap, [competitor names], promo, discount, book now, grab a ride</p>
+            </div>
+            <div class="lens-layer lens-after" id="lensAfter">
+              <div class="listing-mock after">
+                <div class="icon" aria-hidden="true"></div>
+                <h4>Geolah &middot; rides, pets, six-seaters, parcels</h4>
+                <p class="stars">&#9733; 1.6</p>
+                <p class="kw">keywords: ride booking, pet friendly taxi, six seater, metered taxi, parcel delivery</p>
+              </div>
+            </div>
+            <div class="lens-cursor" id="lensCursor" aria-hidden="true"></div>
+          </div>
+          <input type="range" class="lens-slider" id="lensSlider" min="0" max="100" value="50" aria-label="Drag to compare the listing before and after the recommended rewrite">
+          <p class="lens-caption">The listing before, and the recommended rewrite. Drag to compare</p>
+        </div>
+
+        <div class="body-copy">
+          <p>My supervisor subsequently asked me to analyse it properly and report back.</p>
+          <p>I had never studied ASO. What I had was search engine optimisation and, more recently, generative engine optimisation, and I gambled that the transfer would be closer than the different acronym suggested. It was. Title, subtitle and description carry indexing weight. Keyword selection governs which queries you are eligible to appear for at all. The vocabulary changes; the underlying logic of matching intent to listing does not.</p>
+          <p>My recommendations were three. Stop spending the hundred-character keyword field on competitor names, and spend it instead on terms drawn from autocomplete suggestions, People Also Ask results, and the language customers actually use when they describe what they need. Rewrite the title, subtitle and descriptions around those terms. And do not buy ranking placement yet.</p>
+          <p>That last recommendation is the one I want to defend, because it argued against spending money, which is not the natural instinct of a marketing intern trying to be useful. Paid placement rented against a 1.6-star listing buys traffic to a page that converts poorly. It is money spent making a weakness more visible to more people.</p>
+          <p>The company's counter-position is reasonable and I should state it. Metadata is the lever available this quarter. Rating recovery is measured in quarters and requires product and operations change that no intern can initiate and no marketing team can deliver alone. Doing the cheap thing while the expensive thing remains impossible is not irrational; it is what you do while you wait.</p>
+          <p>So I did both. I completed the audit properly and delivered the rewrite, and I documented separately, and clearly, why metadata alone could not fix a rating problem. Geolah will be using the report to improve its listings.</p>
+        </div>
+        <div class="what-changed">
+          <span class="mono label">What changed</span>
+          <p>I check whether the task I have been handed is the task that solves the problem, before I go and do it well.</p>
+        </div>
+      </div>
+      <div class="margin">
+        <p class="marginalia">Doing the wrong work excellently is still doing the wrong work.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- ARTICLE 06 : THE CAMPAIGN THE PLATFORM WOULD NOT RUN -->
+  <article class="article" id="art-06">
+    <div class="grid12">
+      <div class="rail">
+        <span class="mono article-num">Article 06 / Marketing</span>
+        <hr class="hairline article-hairline">
+      </div>
+      <div class="measure reveal">
+        <p class="standfirst f-display">The number was accurate. It was rejected anyway, and the reason turned out to be the most useful thing I learned about writing copy.</p>
+        <dl class="spec-panel">
+          <div class="spec-row"><dt>Weeks</dt><dd>[n]</dd></div>
+          <div class="spec-timeline" aria-hidden="true">
+            <div class="spec-timeline-cells"><div class="spec-timeline-cell"></div><div class="spec-timeline-cell"></div><div class="spec-timeline-cell"></div><div class="spec-timeline-cell"></div><div class="spec-timeline-cell"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell"></div></div>
+            <div class="spec-timeline-labels"><span>Week 1</span><span>Week 8</span></div>
+          </div>
+          <div class="spec-row"><dt>Tools</dt><dd>TikTok Ads Manager, CapCut</dd></div>
+          <div class="spec-row"><dt>Deliverable</dt><dd>A driver recruitment campaign, rejected, rewritten twice</dd></div>
+        </dl>
+        <div class="body-copy">
+          <p>Driver recruitment was the sharper half of Geolah's problem. A ride-hailing platform can advertise to passengers all it likes, but a booking that cannot be matched to a driver is worse than no booking at all, because it converts a curious stranger into a disappointed one, and disappointed strangers write reviews.</p>
+          <p>So we built a National Day campaign aimed at drivers, and I wrote it around the strongest thing we had, which was money. Geolah was running three incentives at the time, and the copy led with a per-ride figure.</p>
+          <p>The figure was real. I had checked it. The advertisement was rejected.</p>
+        </div>
+        <figure class="figure">
+          <figcaption>The rejection notice. The policy name matters more than the wording.</figcaption>
+          <img class="figure-img" src="assets/art-06-fig-01.jpg" alt="The TikTok Ads Manager rejection notice for the driver recruitment campaign" loading="lazy" decoding="async" style="--ar:4/5;" onerror="window.mediaFallback(this)">
+          <div class="media-placeholder" style="--ar:4/5;display:none;">Image slot &middot; ART-06 &middot; 4:5 &middot; replace with art-06-fig-01.jpg</div>
+        </figure>
+        <div class="body-copy">
+          <p>My first assumption was that the platform disallowed earnings claims outright, and I spent a while irritated on that basis. It does not. What it disallows is presenting a figure as unconditional, and once I understood the distinction I stopped being irritated, because the distinction is not a technicality.</p>
+          <p>A payout figure detached from its conditions is a promise the company has not made. It is aimed at people deciding how to spend their working week, and some of them will decide on the strength of that number. The rule exists because that specific category of claim does real damage to people whose income depends on believing it. Written down plainly like that, it is difficult to argue with.</p>
+          <p>The complication was the third incentive, which was tiered. Tiered structures are internally sensible and I want to state their case fairly. A flat payment rewards a driver who completes one trip identically to a driver who commits a month. Tiers direct money towards sustained activity, which is precisely what a platform short on supply needs to be buying. The complexity was not carelessness. It was the point.</p>
+          <p>But a tiered structure cannot be stated honestly in a caption, and this is where the two legitimate positions collide. Quote the top tier and you mislead most of your audience. Quote the entry tier and you undersell the programme to the people most likely to qualify for more. Quote all of it and the caption becomes unreadable, and unreadable is not the same as disclosed.</p>
+          <p>So I stopped trying to solve it in the caption. The figures and their conditions moved to a landing page where they could be set out legibly and at length, and the caption carried the invitation instead of the number. I produced two rewrites: one conditional version carrying the qualifying terms in frame, and one carrying no figure at all.</p>
+          <p>What I did not expect was that the constraint improved the work. Once a caption cannot carry a number, it has to carry a reason, and reasons turn out to be more persuasive than figures to anyone who has been advertised at before, which is everyone.</p>
+          <p>I write the condition before I write the number now. If the condition will not fit, the number does not go in the caption.</p>
+        </div>
+        <div class="what-changed">
+          <span class="mono label">What changed</span>
+          <p>I write the condition before I write the number.</p>
+        </div>
+        <div class="article-closing">
+          <blockquote class="pull-quote f-display">Honesty is not only a property of what you say. It is partly a property of the channel you say it in.</blockquote>
+        </div>
+      </div>
+      <div class="margin">
+        <p class="marginalia">Rejected under [exact policy name from Ads Manager]. Check it. Do not guess.</p>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============================= 06. DEPARTMENT 02 OPERATIONS ============================= -->
+<section id="dept-02" class="dept-ground-paper">
+  <div class="dept-break-region">
+    <div class="dept-break">
+      <div class="dept-break-inner">
+        <div class="dept-break-row">
+          <span class="dept-break-numeral f-display" aria-hidden="true">02</span>
+          <h2 class="dept-break-name f-display">Operations</h2>
+        </div>
+        <p class="dept-break-standfirst f-display">The half of the job that happened off-camera, and mostly by phone.</p>
+        <p class="mono dept-break-meta">Chapter 02 &middot; Two articles &middot; Weeks 1&ndash;8</p>
+        <div class="dept-break-contents mono" aria-label="Chapter contents">
+          <p>07&ensp;The Phone</p>
+          <p>08&ensp;Thirty-Three Cars and One Argument</p>
+        </div>
+        <div class="dept-break-cue" aria-hidden="true">
+          <span class="mono">Turn the page &darr;</span>
+          <span class="dept-break-cue-line"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="index-rail-wrap">
+    <div class="index-rail" id="rail-02">
+      <a class="rail-card" href="#art-07">
+        <div class="rail-card-media">
+          <img src="assets/art-07-cover.jpg" alt="Cover image for The Phone" loading="lazy" decoding="async" onerror="window.mediaFallback(this)">
+          <div class="media-placeholder" style="display:none;">Image slot &middot; art-07-cover.jpg &middot; 4:5</div>
+        </div>
+        <div class="rail-card-body">
+          <span class="num">07</span>
+          <h3 class="f-display">The Phone</h3>
+          <p class="spec-mini">Weeks 1&ndash;8 &middot; calls and enquiries</p>
+        </div>
+      </a>
+      <a class="rail-card" href="#art-08">
+        <div class="rail-card-media">
+          <img src="assets/art-08-cover.jpg" alt="Cover image for Thirty-Three Cars and One Argument" loading="lazy" decoding="async" onerror="window.mediaFallback(this)">
+          <div class="media-placeholder" style="display:none;">Image slot &middot; art-08-cover.jpg &middot; 4:5</div>
+        </div>
+        <div class="rail-card-body">
+          <span class="num">08</span>
+          <h3 class="f-display">Thirty-Three Cars and One Argument</h3>
+          <p class="spec-mini">Two events &middot; 33 of 40 cars</p>
+        </div>
+      </a>
+    </div>
+    <div class="rail-progress-track"><div class="rail-progress-fill" data-rail-fill="rail-02"></div></div>
+  </div>
+
+  <!-- ARTICLE 07 : THE PHONE -->
+  <article class="article" id="art-07">
+    <div class="grid12">
+      <div class="rail">
+        <span class="mono article-num">Article 07 / Operations</span>
+        <hr class="hairline article-hairline">
+      </div>
+      <div class="measure reveal">
+        <p class="standfirst f-display">I have avoided speaking to strangers my whole life. The job was mostly speaking to strangers.</p>
+        <dl class="spec-panel">
+          <div class="spec-row"><dt>Weeks</dt><dd>1&ndash;8</dd></div>
+          <div class="spec-timeline" aria-hidden="true">
+            <div class="spec-timeline-cells"><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div></div>
+            <div class="spec-timeline-labels"><span>Week 1</span><span>Week 8</span></div>
+          </div>
+          <div class="spec-row"><dt>Tools</dt><dd>Phone, WhatsApp, prepared call script</dd></div>
+          <div class="spec-row"><dt>Deliverable</dt><dd>Driver enquiry handling and event recruitment calls</dd></div>
+        </dl>
+        <div class="body-copy">
+          <p>Driver management means two things in practice. Drivers contact the hotline or WhatsApp with enquiries and I answer them, or they come into the office, usually to collect incentives, and I handle it in person. The enquiries ranged from app faults to passenger disputes. Where I did not have the authority to resolve something, I checked with my manager before answering rather than guessing, which sounds obvious and took me a couple of calls to learn properly.</p>
+          <p>The office conversations were straightforward. Someone is standing in front of you, the exchange has a natural shape, and you can read whether it is going well.</p>
+        </div>
+        <figure class="figure">
+          <figcaption>The script. It was not the problem.</figcaption>
+          <img class="figure-img" src="assets/art-07-fig-01.jpg" alt="The prepared call script used for driver recruitment calls" loading="lazy" decoding="async" style="--ar:4/5;" onerror="window.mediaFallback(this)">
+          <div class="media-placeholder" style="--ar:4/5;display:none;">Image slot &middot; ART-07 &middot; 4:5 &middot; replace with art-07-fig-01.jpg</div>
+        </figure>
+        <div class="body-copy">
+          <p>The harder half was outbound. With Anthea and Reona, I called drivers who had expressed interest in the Car Sticker Installation Programme, most of whom had gone quiet after being messaged, to confirm their slots or persuade them to attend.</p>
+          <p>I was bad at this, and I want to describe it accurately rather than gently. I have disliked speaking to strangers since I was young. Despite having a prepared script in front of me, my first calls involved stuttering, mispronouncing drivers' names, and on one occasion mispronouncing my own. Very little persuading occurred. I would put the phone down and feel the specific embarrassment of having had every word available to me and still not managed it.</p>
+          <p>The script was not the problem. That took me a while to see. My attention was entirely on my own discomfort, which meant that whatever the driver said arrived as noise while I waited for my turn to read the next line.</p>
+          <p>What changed it was a technique my supervisor and the other interns use themselves, and which they described as though it were obvious: speak as though you are someone more confident than you are. It works, and I want to be careful about why, because the easy reading is that it manufactures confidence and I do not think it does. It moves your attention off yourself. That is all it does. And the reason that improves the call is that once you are not monitoring your own performance, you are free to listen.</p>
+          <p>Once I was listening, there was something to work with. I began adapting to how each driver spoke, since people tell you a great deal about how they want to be addressed in the first few seconds of speaking. I applied the EAST framework from our Communications and Persuasion module, making the ask easy, attractive, social and timely rather than simply louder or more repeated. More drivers agreed to come.</p>
+          <p>The change is not that I became confident on the phone. It is that I stopped preparing what I was going to say and started preparing to hear what they would say.</p>
+        </div>
+        <div class="what-changed">
+          <span class="mono label">What changed</span>
+          <p>I prepare to listen, not to speak.</p>
+        </div>
+      </div>
+      <div class="margin">
+        <p class="marginalia">The script was never the problem. The script was where I was hiding.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- ARTICLE 08 : THIRTY-THREE CARS AND ONE ARGUMENT -->
+  <article class="article" id="art-08">
+    <div class="grid12">
+      <div class="rail">
+        <span class="mono article-num">Article 08 / Operations</span>
+        <hr class="hairline article-hairline">
+      </div>
+      <div class="measure reveal">
+        <p class="standfirst f-display">Two events. One produced changes to the product. The other produced the most useful thing anyone said to me all internship, from someone trying to ruin my afternoon.</p>
+        <dl class="spec-panel">
+          <div class="spec-row"><dt>Weeks</dt><dd>[n]&ndash;[n]</dd></div>
+          <div class="spec-timeline" aria-hidden="true">
+            <div class="spec-timeline-cells"><div class="spec-timeline-cell"></div><div class="spec-timeline-cell"></div><div class="spec-timeline-cell"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell active"></div><div class="spec-timeline-cell"></div></div>
+            <div class="spec-timeline-labels"><span>Week 1</span><span>Week 8</span></div>
+          </div>
+          <div class="spec-row"><dt>Events</dt><dd>Car Sticker Installation Programme; NTUC Platform Workers Appreciation Day</dd></div>
+          <div class="spec-row"><dt>Deliverable</dt><dd>Scheduling calls, on-site driver support, feedback capture, sign-up conversion</dd></div>
+        </dl>
+        <div class="body-copy">
+          <p>The Car Sticker Installation Programme. My role was to call drivers scheduled for installation and confirm their slots, chase the ones who had not arrived, handle enquiries while decals were applied, and record whatever feedback drivers offered.</p>
+          <p>Thirty-three of forty booked cars were completed. On the day that felt simply like a good operational result, and it was. It took me longer to notice what the number actually represented.</p>
+        </div>
+        <figure class="figure">
+          <figcaption>Installation day. A driver's own car is not a media buy.</figcaption>
+          <img class="figure-img" src="assets/art-08-fig-01.jpg" alt="Sticker installation day, with a driver's car receiving a Geolah decal" loading="lazy" decoding="async" style="--ar:4/5;" onerror="window.mediaFallback(this)">
+          <div class="media-placeholder" style="--ar:4/5;display:none;">Image slot &middot; ART-08 &middot; 4:5 &middot; replace with art-08-fig-01.jpg</div>
+        </figure>
+        <div class="body-copy">
+          <p>A decal is not a media buy. Geolah cannot purchase vehicle livery on a fleet it does not own. Every sticker on the road is a driver who agreed to be publicly associated with the platform, on their own property, in front of everyone they drive past. Which means the company's most visible physical presence in Singapore is gated entirely by driver goodwill, and no amount of budget substitutes for it. Thirty-three cars is not a logistics figure. It is a trust figure.</p>
+          <p>The unplanned value of the day was the waiting. A driver whose car is being worked on has fifteen minutes and nothing to do, which turns out to be an interview nobody scheduled and nobody would have got by sending a form.</p>
+          <p>One driver, attending with a family member, spent that time giving detailed and entirely unsparing feedback on how the platform operated and what she believed would improve it. She was not complaining. She was specific, and she had clearly been thinking about it for some time before anyone asked. I recorded what she said alongside the rest of the day's feedback and raised it at the team meeting afterwards. Several of those points were subsequently used to improve the app, the operations and the incentive structure.</p>
+          <p>That is the part of this internship I am most satisfied with, and I want to describe my role in it honestly, because it is easy to describe it flatteringly. I did not create the insight. A driver did. What I contributed was being present, writing it down, and making sure it reached a room where somebody had the authority to act on it. That is a smaller contribution than having the idea, and it is not nothing, because an observation nobody carries into a meeting may as well not have been made.</p>
+        </div>
+      </div>
+      <div class="margin">
+        <p class="marginalia">The most useful market research I encountered all internship was delivered by someone trying to clear my booth.</p>
+      </div>
+    </div>
+
+    <figure class="figure--bleed">
+      <img src="assets/art-08-fig-02.jpg" alt="The Geolah booth at NTUC Platform Workers Appreciation Day" loading="lazy" decoding="async" onerror="window.mediaFallback(this)">
+      <div class="media-placeholder" style="--ar:16/9;aspect-ratio:16/9;display:none;">Image slot &middot; ART-08 &middot; 16:9 &middot; replace with art-08-fig-02.jpg</div>
+      <figcaption>NTUC Platform Workers Appreciation Day. The booth I stopped hiding behind.</figcaption>
+    </figure>
+
+    <div class="grid12">
+      <div class="rail"></div>
+      <div class="measure reveal">
+        <div class="body-copy">
+          <p>NTUC Platform Workers Appreciation Day. The task was to promote Geolah to attendees, convert them into sign-ups as drivers or passengers, assist them through the driver application, and hand out goodie bags we had packed ourselves.</p>
+          <p>I opened badly. I greeted people and they walked past me to my colleagues, repeatedly, which is a specific and public way to fail. Rather than continue failing in the same direction for several more hours, I stopped and watched how the others were doing it. Then I adapted their approach into something that sounded like me rather than an impression of them, and used it for the rest of the day. Sign-ups followed, and the customer service instinct I had built up on the phone turned out to transfer almost directly.</p>
+          <p>The context of the room matters. Singapore's Platform Workers Act 2024 came fully into force on 1 January 2025, granting platform workers CPF contributions, work injury compensation equivalent to employees, and a legal framework for representation (Ministry of Manpower, 2024). NTUC was part of the tripartite process behind it. The people I was speaking to were not an unrepresented cost input to a business model. They were a recognised labour category with statutory protections, and most of them already drove for somebody else. Which meant the honest pitch was never "leave your platform." It was "add ours," because that is what the situation actually permitted.</p>
+          <p>The argument. One attendee spent a sustained period at my booth insisting that Geolah's incentives were inadequate, comparing them unfavourably and at volume with the platform he drove for. Other visitors began drifting away. I let the conversation run briefly, acknowledged that we were a newer entrant, and said that competition in the market was reasonable. He was dissatisfied with that and moved off.</p>
+          <p>At the time I was relieved. I remember the relief clearly.</p>
+          <p>On reflection, relief was the wrong response, and this is the thing from the whole eight weeks I have thought about most.</p>
+          <p>He was not wrong. He was conducting a competitive comparison out loud, in public, in front of my target audience, using figures he had lived rather than researched. My discomfort was entirely about the delivery and not at all about the content, and I allowed the first to determine how I treated the second. A driver who tells you your incentives do not compete is handing you the same information a competitive analysis would produce, at no cost and with no delay. The information was accurate. The setting was hostile. I confused the two.</p>
+          <p>What I would do differently is not manage him away faster or more smoothly. It is ask him what number would have changed his mind, and write the answer down.</p>
+          <p>I no longer treat hostile feedback as a problem to be contained. It is feedback that arrived rudely, and the rudeness is the least interesting thing about it.</p>
+        </div>
+        <div class="what-changed">
+          <span class="mono label">What changed</span>
+          <p>I do not confuse the delivery of feedback with the content of it.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============================= 07. DEPARTMENT 03 OVERALL ============================= -->
+<section id="dept-03" class="dept-ground-sand">
+  <div class="dept-break-region">
+    <div class="dept-break">
+      <div class="dept-break-inner">
+        <div class="dept-break-row">
+          <span class="dept-break-numeral f-display" aria-hidden="true">03</span>
+          <h2 class="dept-break-name f-display">Overall</h2>
+        </div>
+        <p class="dept-break-standfirst f-display">What eight weeks looked like once I stopped mistaking the thing I was practising for the thing being assessed.</p>
+        <p class="mono dept-break-meta">Chapter 03 &middot; One article &middot; Corrections &middot; References &middot; Colophon</p>
+        <div class="dept-break-contents mono" aria-label="Chapter contents">
+          <p>09&ensp;What They Actually Valued</p>
+          <p>&ensp;&ensp;&ensp;Corrections and Clarifications</p>
+          <p>&ensp;&ensp;&ensp;References</p>
+          <p>&ensp;&ensp;&ensp;Colophon</p>
+        </div>
+        <div class="dept-break-cue" aria-hidden="true">
+          <span class="mono">Turn the page &darr;</span>
+          <span class="dept-break-cue-line"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARTICLE 09 : WHAT THEY ACTUALLY VALUED -->
+  <article class="article" id="art-09">
+    <div class="grid12">
+      <div class="rail">
+        <span class="mono article-num">Article 09 / Overall</span>
+        <hr class="hairline article-hairline">
+      </div>
+      <div class="measure reveal">
+        <p class="standfirst f-display">I spent eight weeks getting better at content. My supervisor's assessment barely mentions it.</p>
+        <dl class="spec-panel">
+          <div class="spec-row"><dt>Weeks</dt><dd>8 (end-of-attachment review)</dd></div>
+          <div class="spec-timeline" aria-hidden="true">
+            <div class="spec-timeline-cells"><div class="spec-timeline-cell"></div><div class="spec-timeline-cell"></div><div class="spec-timeline-cell"></div><div class="spec-timeline-cell"></div><div class="spec-timeline-cell"></div><div class="spec-timeline-cell"></div><div class="spec-timeline-cell"></div><div class="spec-timeline-cell active"></div></div>
+            <div class="spec-timeline-labels"><span>Week 1</span><span>Week 8</span></div>
+          </div>
+          <div class="spec-row"><dt>Source</dt><dd>Supervisor written assessment</dd></div>
+        </dl>
+        <div class="body-copy">
+          <p>At the end of the attachment I asked my supervisor what value the interns had added. I expected the answer to be about output, because output was what I had been measuring myself by. It was worth quoting at length precisely because it was not.</p>
+        </div>
+
+        <div class="letters-block">
+          <blockquote class="letters-quote f-display">"The marketing interns added significant value to Geolah during an important growth phase for the company. They supported a wide range of activities, including driver management, social media planning and execution, and organising events with strong participation. Their contributions helped the team operate more effectively while strengthening Geolah's visibility in the market."</blockquote>
+          <p class="mono attribution">Supervisor, on contribution</p>
+        </div>
+
+        <div class="letters-block">
+          <blockquote class="letters-quote f-display">"We saw an increase in driver registrations, as well as in initiated and completed trips. Their campaign-specific and trend-led social media outreach also helped increase awareness and social media views."</blockquote>
+          <p class="mono attribution">Supervisor, on impact</p>
+        </div>
+
+        <div class="letters-block">
+          <blockquote class="letters-quote f-display">"Their strong understanding of social media, creativity, and ability to work well as a team. They were able to collaborate effectively, take ownership of their responsibilities, and consistently deliver the right output. Their enthusiasm, adaptability, and willingness to contribute across different areas made them valuable members of the Geolah team."</blockquote>
+          <p class="mono attribution">Supervisor, on what impressed her</p>
+        </div>
+
+        <div class="body-copy">
+          <p>Three things in that assessment are worth sitting with rather than simply accepting and moving on.</p>
+          <p>The credit is collective. She says interns, plural, throughout, and she is right to. The calendar, the events and the calls were three people's work, and the work was better for being three people's. I can evidence what I personally produced and I have done so elsewhere in this issue. But the outcomes she names belong to a team, and quietly converting them into individual achievements would be the easiest and least honest thing I could do with this page.</p>
+          <p>The metrics she chose are supply-side. Driver registrations. Initiated and completed trips. Not follower count, not impressions, not views, though views appear later and secondarily. Those first metrics are marketplace health measures, and completed trips in particular measures whether the two sides of the platform successfully met. Without a controlled comparison I cannot claim my content moved them, and other things were running throughout. But the choice of metric tells me what the company was actually watching, and it was the same thing I had independently concluded it should be watching. That alignment was accidental. I noticed it only afterwards, reading her answer.</p>
+          <p>And the thing that impressed her was not the thing I was improving. I spent eight weeks getting better at editing, at Excel, at store metadata, and I could describe my progress in each with some precision. What she names is teamwork, ownership, adaptability, and a willingness to work outside a defined area. Not one of those is a skill I set out to develop. They were being observed the entire time I was busy improving something else.</p>
+          <p>That is the most useful sentence anyone said to me during this internship, and it was not intended as feedback at all. Technical skill was the entry requirement; it was the reason I was hired rather than the reason I was useful. What determined whether I was useful was whether I could be relied on in situations nobody had briefed me for. A driver on the phone with a question above my authority. A booth where my opening line was not working and I had four hours left. A report nobody had asked me to write.</p>
+          <p>I have stopped assuming that the thing I am practising is the thing I am being assessed on.</p>
+        </div>
+        <div class="what-changed">
+          <span class="mono label">What changed</span>
+          <p>I stop assuming that the thing I am practising is the thing I am being assessed on.</p>
+        </div>
+        <div class="article-closing">
+          <blockquote class="pull-quote f-display">Technical skill was the entry requirement. Adaptability was the actual job.</blockquote>
+        </div>
+
+        <figure class="video" style="margin-block:clamp(4rem,8vh,6rem);">
+          <figcaption>Eight weeks, on video. Replace with author's closing reel.</figcaption>
+          <div class="video-frame">
+            <video class="js-video" preload="none" playsinline controls poster="assets/video/art-09-poster.jpg" onerror="window.mediaFallback(this)">
+              <source src="assets/video/art-09-closing.mp4" type="video/mp4">
+            </video>
+            <div class="video-play" role="button" tabindex="0" aria-label="Play video"></div>
+            <div class="media-placeholder" style="--ar:16/9;display:none;">Video slot &middot; closing reel &middot; replace with art-09-closing.mp4</div>
+          </div>
+        </figure>
+      </div>
+      <div class="margin">
+        <p class="marginalia">The most useful sentence of the internship was not intended as feedback.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- CORRECTIONS AND CLARIFICATIONS -->
+  <article class="article" id="corrections">
+    <div class="grid12">
+      <div class="rail">
+        <span class="mono article-num">Corrections / Overall</span>
+        <hr class="hairline article-hairline">
+      </div>
+      <div class="measure reveal">
+        <p class="standfirst f-display">Eight weeks, and the things I would do differently.</p>
+        <div class="body-copy">
+          <p>Over eight weeks I produced and captioned social content across TikTok and Instagram, built the content calendar and performance tracker, audited both app store listings and reported on them, wrote and rewrote a driver recruitment campaign, handled driver enquiries by phone and in person, and worked two driver-facing events.</p>
+          <p>Three things I got wrong.</p>
+          <ol>
+            <li>I assumed that a rise in bookings during a period I was active was evidence that I had caused it. That is not how attribution works, and I would set up tagged links from week one rather than reconstructing a story afterwards.</li>
+            <li>I built videos around ideas I found funny and checked retention afterwards. The order should have been reversed, and the data told me so in the plainest possible terms.</li>
+            <li>I treated hostile feedback at the NTUC booth as a disruption to be managed. It was competitive intelligence, offered free by someone with no reason to flatter me, and I did not write a word of it down.</li>
+          </ol>
+          <p>Three recommendations for Geolah.</p>
+          <ol>
+            <li>Recover the store rating before buying paid placement, because paid traffic against a 1.6-star listing amplifies the weakness rather than the offer.</li>
+            <li>Capture driver feedback systematically rather than incidentally, since the most actionable insight of my entire attachment arrived because somebody happened to be waiting for their car and felt like talking.</li>
+            <li>Treat sticker programme take-up as a trust metric rather than a logistics number, because a driver who will not put your decal on their own vehicle is telling you something no survey will surface.</li>
+          </ol>
+          <p>Three for myself.</p>
+          <ol>
+            <li>Verify attribution before claiming an effect.</li>
+            <li>Establish what the actual constraint is before executing a brief well, because doing the wrong work excellently is still doing the wrong work.</li>
+            <li>Write the finding down somewhere other people can see it, because a finding nobody else can access has not yet been contributed to anything.</li>
+          </ol>
+          <p>Closing observation.</p>
+          <p>The thing I did not expect to leave with is a working theory about this company. Geolah's marketing problem was, for most of my eight weeks, an operations problem wearing a costume. Awareness that converts into bookings which do not get confirmed is worse than no awareness at all, because it turns a stranger into a disappointed one at scale. The answer is not to choose between the two sides of the marketplace but to sequence them properly. I only understood that after spending time on the phone with the supply side, rather than writing at the demand side from a desk.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- REFERENCES -->
+  <section id="references">
+    <div class="grid12">
+      <div class="rail">
+        <span class="mono article-num">References</span>
+        <hr class="hairline article-hairline">
+      </div>
+      <div class="reveal" style="grid-column:4/11;">
+        <ul class="references-list">
+          <li>Land Transport Authority. (2023, September). <em>Review of point-to-point industry structure and regulatory framework.</em> https://www.lta.gov.sg/content/ltagov/en/newsroom/2023/9/news-releases/review_of_point-to-point_industry_structure.html</li>
+          <li>Ministry of Manpower. (2024, December 17). <em>Commencement of Platform Workers Act from 1 Jan 2025</em> [Press release]. https://www.mom.gov.sg/newsroom/press-releases/2024/1217-commencement-of-platform-workers-act-from-1-jan-2025</li>
+          <li class="reference-placeholder">[Placeholder: Geolah passenger App Store listing, retrieval date]</li>
+          <li class="reference-placeholder">[Placeholder: Geolah driver App Store listing, retrieval date]</li>
+          <li class="reference-placeholder">[Placeholder: Geolah passenger Google Play listing, retrieval date]</li>
+          <li class="reference-placeholder">[Placeholder: Geolah driver Google Play listing, retrieval date]</li>
+          <li class="reference-placeholder">[Placeholder: TikTok Ads Manager advertising policy, exact policy name from rejection notice]</li>
+          <li class="reference-placeholder">[Placeholder: Digital and Traditional Marketing Strategies module reading for content ratio]</li>
+          <li class="reference-placeholder">[Placeholder: Communications and Persuasion module source for EAST framework]</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ============================= 09. COLOPHON ============================= -->
+<section id="colophon">
+  <div class="grid12">
+    <div class="rail">
+      <h2 class="dept-numeral-title f-display" style="font-size:clamp(32px,5vw,56px);">Colophon</h2>
+    </div>
+    <div class="colophon-credits" style="grid-column:4/8;">
+      <p>Writing &amp; Design &middot; Danial [surname]</p>
+      <p>Photography &amp; Talent &middot; Rima</p>
+      <p>Built with &middot; HTML, CSS and stubbornness</p>
+      <p>Set in &middot; Fraunces, Switzer, Martian Mono</p>
+      <p>Submitted &middot; [date]</p>
+    </div>
+    <div class="colophon-body" style="grid-column:8/13;">
+      <p>Written and produced by Danial [surname] over eight weeks at Geolah Pte Ltd, [dates]. With thanks to Anthea and Reona, whose editing was better than mine and who never once made that a problem, to the marketing team, and to my supervisor, who let an intern write a report nobody had asked for.</p>
+      <p>Commercially sensitive figures have been withheld or expressed as proportions in line with company policy. No driver, passenger or customer is identified. Where a number appears as a ratio, the underlying absolute value is confidential.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================= 10. FOOTER ============================= -->
+<footer>
+  <hr class="hairline" style="margin-bottom:20px;">
+  <p>Issue 01. End of issue.</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var alreadyGated = document.documentElement.classList.contains('gate-skip');
+
+  /* ---------- GATE ---------- */
+  var gate = document.getElementById('gate');
+  var gateCounter = document.getElementById('gateCounter');
+  var gateSkip = document.getElementById('gateSkip');
+  var coverPanel = document.getElementById('coverPanel');
+  var heroRima = document.getElementById('heroRimaImg');
+
+  function enterHeroRima(delay){
+    setTimeout(function(){ heroRima.classList.add('entered'); }, delay);
+  }
+
+  function pour(){
+    requestAnimationFrame(function(){
+      coverPanel.classList.add('poured');
+    });
+    enterHeroRima(reduced ? 0 : 900 + 200);
+  }
+
+  function finishGate(){
+    sessionStorage.setItem('gate','1');
+    gate.classList.add('lift');
+    pour();
+    setTimeout(function(){ gate.style.display='none'; }, 950);
+  }
+
+  if (alreadyGated){
+    gate.style.display='none';
+    coverPanel.classList.add('poured');
+    enterHeroRima(0);
+  } else if (reduced) {
+    gateCounter.textContent = '100';
+    setTimeout(finishGate, 400);
+  } else {
+    var start = null;
+    var duration = 1800;
+    function tick(ts){
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / duration, 1);
+      gateCounter.textContent = Math.round(p * 100);
+      if (p < 1){
+        requestAnimationFrame(tick);
+      } else {
+        finishGate();
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  gateSkip.addEventListener('click', function(){
+    if (gate.style.display === 'none') return;
+    finishGate();
+  });
+
+  /* ---------- REVEAL ON SCROLL ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  /* ---------- TICKER ---------- */
+  var tickerItems = [
+    'Issue 01', 'Danial at Geolah', 'Eight weeks inside a ride-hailing platform most of Singapore had never heard of'
+  ];
+  var catSvg = '<svg class="ticker-cat" viewBox="0 0 20 20" aria-hidden="true"><ellipse cx="10" cy="12" rx="7" ry="5" style="fill:var(--ink)"/><path d="M5 8 L7 3 L9 8 Z" style="fill:var(--ink)"/><path d="M15 8 L13 3 L11 8 Z" style="fill:var(--ink)"/></svg>';
+  function buildTicker(){
+    var track = document.getElementById('tickerTrack');
+    var html = '';
+    for (var r = 0; r < 2; r++){
+      tickerItems.forEach(function(t){
+        html += '<span class="ticker-item">' + t + catSvg + '</span>';
+      });
+    }
+    track.innerHTML = html;
+  }
+  buildTicker();
+
+  /* ---------- NAV: active department + mobile overlay ---------- */
+  var navLinks = document.querySelectorAll('.nav-links a');
+  var tickSpans = document.querySelectorAll('.progress-ticks span');
+  var depts = document.querySelectorAll('#dept-01, #dept-02, #dept-03');
+  var progressFill = document.getElementById('progressFill');
+
+  var navToggle = document.getElementById('navToggle');
+  var navOverlay = document.getElementById('navOverlay');
+  var navOverlayClose = document.getElementById('navOverlayClose');
+  navToggle.addEventListener('click', function(){
+    navOverlay.classList.add('open');
+    navToggle.setAttribute('aria-expanded','true');
+  });
+  navOverlayClose.addEventListener('click', closeOverlay);
+  navOverlay.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeOverlay); });
+  function closeOverlay(){
+    navOverlay.classList.remove('open');
+    navToggle.setAttribute('aria-expanded','false');
+  }
+
+  if ('IntersectionObserver' in window){
+    var deptIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          var id = entry.target.id;
+          navLinks.forEach(function(a){ a.classList.toggle('active', a.dataset.dept === id); });
+          tickSpans.forEach(function(s){ s.classList.toggle('active', s.dataset.dept === id); });
+          document.body.dataset.activeDept = id;
+          var accent = getComputedStyle(entry.target).getPropertyValue('--accent').trim();
+          if (accent) document.documentElement.style.setProperty('--current-accent', accent);
+        }
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    depts.forEach(function(d){ deptIO.observe(d); });
+
+    var breakIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add('pinned');
+          breakIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('.dept-break').forEach(function(b){ breakIO.observe(b); });
+  } else {
+    document.querySelectorAll('.dept-break').forEach(function(b){ b.classList.add('pinned'); });
+  }
+
+  /* ---------- PROGRESS RAIL ---------- */
+  function updateProgress(){
+    var doc = document.documentElement;
+    var scrollable = doc.scrollHeight - window.innerHeight;
+    var frac = scrollable > 0 ? window.scrollY / scrollable : 0;
+    var pct = 8 + frac * 92;
+    if (window.innerWidth <= 760){
+      progressFill.style.width = pct + '%';
+    } else {
+      progressFill.style.height = pct + '%';
+    }
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
+
+  /* ---------- HORIZONTAL INDEX RAILS: drag to scroll + progress ---------- */
+  document.querySelectorAll('.index-rail').forEach(function(rail){
+    rail.scrollLeft = 0;
+    var isDown = false, startX, scrollStart, moved = false;
+    rail.addEventListener('pointerdown', function(e){
+      isDown = true; moved = false;
+      startX = e.clientX;
+      scrollStart = rail.scrollLeft;
+      rail.classList.add('dragging');
+    });
+    window.addEventListener('pointermove', function(e){
+      if (!isDown) return;
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) > 6) moved = true;
+      rail.scrollLeft = scrollStart - dx;
+    });
+    window.addEventListener('pointerup', function(){
+      if (!isDown) return;
+      isDown = false;
+      rail.classList.remove('dragging');
+    });
+    rail.addEventListener('click', function(e){
+      if (moved){ e.preventDefault(); }
+    });
+    var fillEl = document.querySelector('[data-rail-fill="' + rail.id + '"]');
+    function updateRailFill(){
+      var max = rail.scrollWidth - rail.clientWidth;
+      var pct = max > 0 ? (rail.scrollLeft / max) * 100 : 0;
+      if (fillEl) fillEl.style.width = Math.max(4, pct) + '%';
+    }
+    rail.addEventListener('scroll', updateRailFill, { passive: true });
+    updateRailFill();
+  });
+
+  /* ---------- DRAG LENS ---------- */
+  var lensFrame = document.getElementById('lensFrame');
+  var lensAfter = document.getElementById('lensAfter');
+  var lensCursor = document.getElementById('lensCursor');
+  var lensSlider = document.getElementById('lensSlider');
+  var isCoarse = window.matchMedia('(hover: none)').matches;
+
+  if (lensFrame && !isCoarse){
+    lensFrame.addEventListener('pointermove', function(e){
+      var rect = lensFrame.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      lensAfter.style.clipPath = 'circle(90px at ' + x + 'px ' + y + 'px)';
+      lensCursor.style.left = x + 'px';
+      lensCursor.style.top = y + 'px';
+    });
+    lensFrame.addEventListener('pointerleave', function(){
+      lensAfter.style.clipPath = 'circle(90px at 50% 50%)';
+    });
+  }
+  if (lensSlider){
+    lensSlider.addEventListener('input', function(){
+      lensAfter.style.clipPath = 'inset(0 ' + (100 - lensSlider.value) + '% 0 0)';
+    });
+  }
+
+  /* ---------- VIDEO PLAY ---------- */
+  document.querySelectorAll('video.js-video').forEach(function(v){
+    var src = v.querySelector('source');
+    if (src) src.addEventListener('error', function(){ window.mediaFallback(v); });
+    if (v.poster){
+      var probe = new Image();
+      probe.onerror = function(){ window.mediaFallback(v); };
+      probe.src = v.poster;
+    }
+  });
+  document.querySelectorAll('.video-play').forEach(function(btn){
+    var frame = btn.closest('.video-frame');
+    var vid = frame ? frame.querySelector('video') : null;
+    if (!vid) return;
+    function play(){
+      vid.play();
+      btn.classList.add('hidden');
+    }
+    btn.addEventListener('click', play);
+    btn.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); play(); } });
+    vid.addEventListener('play', function(){ btn.classList.add('hidden'); });
+  });
+
+  /* ---------- PINNED WALKTHROUGH ---------- */
+  var walkSteps = document.querySelectorAll('.walk-step');
+  var walkVisuals = document.querySelectorAll('.walk-visual');
+  if ('IntersectionObserver' in window && walkSteps.length){
+    var walkIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var step = entry.target.dataset.step;
+        if (entry.isIntersecting){
+          walkSteps.forEach(function(s){ s.classList.toggle('active', s === entry.target); });
+          walkVisuals.forEach(function(v){ v.classList.toggle('active', v.dataset.visual === step); });
+        }
+      });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    walkSteps.forEach(function(s){ walkIO.observe(s); });
+  }
+
+  /* ---------- RIMA ---------- */
+  var rima = document.getElementById('rima');
+  var isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+  if (rima && !isTouch && !reduced){
+    var svg = rima.querySelector('svg');
+    var body = svg.querySelector('.body');
+    var tail = svg.querySelector('.tail');
+    var ear1 = svg.querySelectorAll('.ear')[0];
+    var ear2 = svg.querySelectorAll('.ear')[1];
+
+    var coverEl = document.getElementById('cover');
+    var landingThreshold = 400;
+    function measureLanding(){
+      var h = coverEl ? coverEl.getBoundingClientRect().height : 400;
+      landingThreshold = Math.max(400, h - 80);
+    }
+    measureLanding();
+    window.addEventListener('resize', measureLanding);
+
+    var pointerX = window.innerWidth/2, pointerY = window.innerHeight/2;
+    var bx = pointerX, by = pointerY;
+    var tx = pointerX, ty = pointerY;
+    var ex = pointerX, ey = pointerY;
+    var lastMove = Date.now();
+    var visible = false;
+
+    window.addEventListener('pointermove', function(e){
+      pointerX = e.clientX; pointerY = e.clientY;
+      lastMove = Date.now();
+      rima.classList.remove('idle');
+      var el = document.elementFromPoint(e.clientX, e.clientY);
+      var interactive = el && el.closest('a, .rail-card, .lens-frame, button, details summary');
+      rima.classList.toggle('hovering', !!interactive);
+    });
+
+    function loop(){
+      bx += (pointerX - bx) * 0.12;
+      by += (pointerY - by) * 0.12;
+      tx += (pointerX - tx) * 0.09;
+      ty += (pointerY - ty) * 0.09;
+      ex += (pointerX - ex) * 0.07;
+      ey += (pointerY - ey) * 0.07;
+
+      rima.style.transform = 'translate(' + (bx - 22) + 'px,' + (by - 22) + 'px)';
+      if (tail) tail.style.transform = 'translate(' + (tx - bx) + 'px,' + (ty - by) + 'px)';
+      if (ear1) ear1.style.transform = 'translate(' + (ex - bx) + 'px,' + (ey - by) + 'px)';
+
+      var scrollY = window.scrollY;
+      var shouldShow = scrollY > landingThreshold;
+      if (shouldShow !== visible){
+        visible = shouldShow;
+        rima.classList.toggle('visible', visible);
+      }
+
+      if (Date.now() - lastMove > 2000){
+        rima.classList.add('idle');
+      }
+
+      var dept = document.body.dataset.activeDept;
+      svg.querySelectorAll('.rima-prop').forEach(function(p){ p.classList.remove('active'); });
+      if (dept === 'dept-01') svg.querySelector('.prop-marketing').classList.add('active');
+      else if (dept === 'dept-02') svg.querySelector('.prop-operations').classList.add('active');
+      else if (dept === 'dept-03') svg.querySelector('.prop-overall').classList.add('active');
+
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  }
+})();
+</script>
+
+</body>
+</html>
