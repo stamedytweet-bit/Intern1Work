@@ -8,17 +8,7 @@
 
 ## Assets
 
-The page references local media under an `assets/` directory that is not yet in the repo. Every image and video has a built-in placeholder fallback, so the site renders fully without them. To add the real media, create the following files:
-
-```
-assets/
-├── rima-hero.png          # cover mascot illustration
-├── rima-cursor.png        # cursor companion sprite
-├── art-01-cover.jpg … art-08-cover.jpg
-├── art-01-fig-01.jpg … art-08-fig-02.jpg
-└── video/
-    └── art-09-closing.mp4
-```
+All artwork and video are embedded directly in `index.html` as inline data URIs (covers, figures, the hero mascot, and the two clips), so the site is fully self-contained and needs no `assets/` directory. The only external reference is the small `rima-cursor.png` cursor sprite, which falls back to an inline SVG when absent. Fonts are loaded from Google Fonts / Fontshare over the network.
 
 ## Viewing locally
 
